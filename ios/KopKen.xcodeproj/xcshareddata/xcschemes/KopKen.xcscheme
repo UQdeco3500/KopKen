@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "PoolofMemory.app"
-               BlueprintName = "PoolofMemory"
-               ReferencedContainer = "container:PoolofMemory.xcodeproj">
+               BuildableName = "KopKen.app"
+               BlueprintName = "KopKen"
+               ReferencedContainer = "container:KopKen.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "PoolofMemoryTests.xctest"
-               BlueprintName = "PoolofMemoryTests"
-               ReferencedContainer = "container:PoolofMemory.xcodeproj">
+               BuildableName = "KopKenTests.xctest"
+               BlueprintName = "KopKenTests"
+               ReferencedContainer = "container:KopKen.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "PoolofMemory.app"
-            BlueprintName = "PoolofMemory"
-            ReferencedContainer = "container:PoolofMemory.xcodeproj">
+            BuildableName = "KopKen.app"
+            BlueprintName = "KopKen"
+            ReferencedContainer = "container:KopKen.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "PoolofMemory.app"
-            BlueprintName = "PoolofMemory"
-            ReferencedContainer = "container:PoolofMemory.xcodeproj">
+            BuildableName = "KopKen.app"
+            BlueprintName = "KopKen"
+            ReferencedContainer = "container:KopKen.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
