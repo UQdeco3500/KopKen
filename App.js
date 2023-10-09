@@ -7,6 +7,7 @@ import Reminisce from './src/screens/Reminisce'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import StoreProvider from './src/context/Context'
+import MPC from './src/screens/MPC'
 
 
 const Stack = createNativeStackNavigator();
@@ -24,6 +25,7 @@ function App(props) {
           headerShown: false,
           // contentStyle: { backgroundColor: 'transparent' } 
         }}>
+          <Stack.Screen name='MPC' component={MPC} />
           <Stack.Screen name='Home' component={Home} />
 
           {/* Settings */}
