@@ -14,6 +14,7 @@ import {
     RNPeer,
 } from 'react-native-multipeer-connectivity';
 import { produce } from 'immer';
+import { storage } from '../../App';
 
 export default function MPC() {
     const [displayName, setDisplayName] = useState('');
@@ -23,6 +24,25 @@ export default function MPC() {
     const [peers, setPeers] = useState({});
     const [receivedMessages, setReceivedMessages] = useState({});
     const [session, setSession] = useState(null);
+
+    const handleSetCurrentUser = ({ nativeEvent }) => {
+        const name = nativeEvent.text;
+        setDisplayName(name);
+
+        const session = initSession({
+            displayName: name,
+            serviceType: 'kenangan',
+            discoveryInfo: {
+                myName: name,
+                joinAt: Date.now().toString(),
+            },
+        });
+
+        setSession(session);
+        setPeerID(session.peerID);
+
+        storage.set("currentUser", name)
+    }
 
     useEffect(() => {
         if (!session) return;

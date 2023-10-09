@@ -8,6 +8,7 @@ export const dummyArtefacts = [
                 latitude: -27.472679399680185,
                 longitude: 153.02711120711072
             },
+            people: ['Jerome'],
         },
     },
     {
@@ -19,6 +20,7 @@ export const dummyArtefacts = [
                 latitude: -27.472679399680185,
                 longitude: 153.02711120711072
             },
+            people: ['Jerome'],
         },
     },
     {
@@ -30,6 +32,7 @@ export const dummyArtefacts = [
                 latitude: -27.472679399680185,
                 longitude: 153.02711120711072
             },
+            people: ['Kevin'],
         },
     },
     {
@@ -40,7 +43,9 @@ export const dummyArtefacts = [
                 name: 'Andrew N. Liveris',
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
-                    },
+            },
+            people: ['Jerome'],
+
         },
     },
     {
@@ -51,7 +56,8 @@ export const dummyArtefacts = [
                 name: 'Andrew N. Liveris',
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
-                    },
+            },
+            people: ['Kevin'],
         },
     },
     {
@@ -65,7 +71,8 @@ export const dummyArtefacts = [
                 name: 'Andrew N. Liveris',
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
-                    },
+            },
+            people: ['Kevin'],
         },
     },
     {
@@ -76,7 +83,8 @@ export const dummyArtefacts = [
                 name: 'Andrew N. Liveris',
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
-                    },
+            },
+            people: ['Jerome'],
         },
     },
     {
@@ -87,7 +95,8 @@ export const dummyArtefacts = [
                 name: 'Andrew N. Liveris',
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
-                    },
+            },
+            people: ['Jerome'],
         },
     },
     {
@@ -98,7 +107,8 @@ export const dummyArtefacts = [
                 name: 'Andrew N. Liveris',
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
-                    },
+            },
+            people: ['Jerome', 'Kevin'],
         },
     },
 

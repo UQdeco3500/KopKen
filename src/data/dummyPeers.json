@@ -1,0 +1,24 @@
+{
+    "-4244058696110720189": {
+        "discoveryInfo": {
+            "joinAt": "1696866385679",
+            "myName": "Hazlaz"
+        },
+        "peer": {
+            "displayName": "Hazlaz",
+            "id": "-4244058696110720189"
+        },
+        "state": 0
+    },
+    "8262802511946956021": {
+        "discoveryInfo": {
+            "joinAt": "1696866512644",
+            "myName": "Kevin"
+        },
+        "peer": {
+            "displayName": "Kevin",
+            "id": "8262802511946956021"
+        },
+        "state": 0
+    }
+}
