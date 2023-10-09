@@ -31,7 +31,7 @@ function Home() {
 
     const nearbyPeers = extractDisplayNames(peers);
 
-    const matchingArtifacts = dummyArtefacts.filter(
+    const matchingartefacts = dummyArtefacts.filter(
         artefact =>
             artefact.contexts.location.name === userLocation &&
             (Object.keys(peers).length === 0 ||
@@ -128,26 +128,33 @@ function Home() {
                                 </View>
                             ))}
                         </View>
-                        {matchingArtifacts.map((artifact, index) => (
+                        {matchingartefacts.map((artefact, index) => (
                             <View key={index}>
-                                {artifact.type === 'photo' && (
-                                    <Image source={artifact.content} style={{
+                                {artefact.type === 'photo' && (
+                                    <Image source={artefact.content} style={{
                                         // flex: 1,
                                         // width: '100%'
                                         width: 100,
                                         height: 100
                                     }} />
                                 )}
-                                {artifact.type === 'story' && (
+                                {artefact.type === 'story' && (
                                     <>
-                                        <Text style={text.header2}>{artifact.content.title}</Text>
-                                        <Text>{artifact.content.content}</Text>
+                                        <Text style={text.header2}>{artefact.content.title}</Text>
+                                        <Text>{artefact.content.content}</Text>
                                     </>
                                 )}
-                                {artifact.type === 'keyword' && (
-                                    <Text style={{ ...text.header2, fontStyle: 'italic' }}>{artifact.content}</Text>
+                                {artefact.type === 'keyword' && (
+                                    <Text style={{ ...text.header2, fontStyle: 'italic' }}>{artefact.content}</Text>
                                 )}
-                                <Text>{artifact.contexts.location.name}</Text>
+                                <Text>{artefact.contexts.location.name}</Text>
+                                <View>
+                                    {artefact.contexts.people?.map((person, index) => {
+                                        return (
+                                            <Text key={`${person}-${index}`}>{person}</Text>
+                                        )
+                                    })}
+                                </View>
                             </View>
                         ))}
                     </View>

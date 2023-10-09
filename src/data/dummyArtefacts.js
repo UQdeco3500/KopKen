@@ -112,5 +112,5 @@ export const dummyArtefacts = [
         },
     },
 
-    // ... other artifact objects
+    // ... other artefact objects
 ];
