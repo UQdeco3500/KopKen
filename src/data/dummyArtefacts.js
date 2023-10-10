@@ -37,6 +37,18 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
+        content: require('./photos/Iglu/photo4.jpeg'),
+        contexts: {
+            location: {
+                name: 'Iglu Brisbane CBD',
+                latitude: -27.472679399680185,
+                longitude: 153.02711120711072
+            },
+            people: ['Kevin'],
+        },
+    },
+    {
+        type: 'photo',
         content: require('./photos/AndrewLiveris/photo9.jpeg'),
         contexts: {
             location: {
