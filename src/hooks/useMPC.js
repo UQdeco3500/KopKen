@@ -64,8 +64,29 @@ export const useMPC = () => {
 
     const disconnect = () => {
         session?.disconnect();
+        stopAdvertising();
+        stopBrowsing();
         setPeers({});
     }
+
+    const changeDisplayName = (newDisplayName) => {
+        // Disconnect the current session
+        disconnect();
+
+        // Wait a moment to ensure disconnection
+        setTimeout(() => {
+            // Re-initialize session with the new displayName
+            initializeSession(newDisplayName);
+
+            // Optionally restart advertising and/or browsing
+            if (isAdvertizing) {
+                startAdvertising();
+            }
+            if (isBrowsing) {
+                startBrowsing();
+            }
+        }, 1000);  // 1 second delay, adjust as needed
+    };
 
     useEffect(() => {
         if (!session) return;
@@ -153,5 +174,6 @@ export const useMPC = () => {
         stopAdvertising,
         disconnect,
         peers,
+        changeDisplayName,
     };
 };

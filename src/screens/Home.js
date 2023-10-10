@@ -7,6 +7,7 @@ import { useUserLocation } from '../context/Context';
 import { dummyArtefacts } from '../data/dummyArtefacts';
 import { sizes, text } from '../data/theme';
 import { useMPC } from '../hooks/useMPC';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 function Home() {
     const {
@@ -21,7 +22,10 @@ function Home() {
         stopAdvertising,
         disconnect,
         peers,
+        changeDisplayName
     } = useMPC();
+
+    const [newDisplayName, setNewDisplayName] = useState('');
 
     const userLocation = useUserLocation()
 
@@ -45,30 +49,35 @@ function Home() {
 
     if (!displayName) {
         return (
-            <SafeAreaView>
-                <View style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}>
-                    <Text
-                        style={{ fontSize: 20, marginBottom: 5 }}
-                    >
-                        Input your display name and enter:
-                    </Text>
-                    <TextInput
-                        style={{
-                            fontSize: 30,
-                            borderWidth: 1,
-                            borderColor: 'black',
-                            padding: 10,
-                            width: 300,
-                        }}
-                        placeholder={'display name'}
-                        onSubmitEditing={(ev) => initializeSession(ev.nativeEvent.text)}
-                    />
-                </View>
-            </SafeAreaView>
+            <KeyboardAwareScrollView
+                extraScrollHeight={64}
+                keyboardOpeningTime={10}
+                contentContainerStyle={{ flexGrow: 1 }}
+            >
+                <SafeAreaView style={{ flex: 1 }}>
+
+                    <View style={{
+                        padding: sizes.padding.md,
+                        flex: 1,
+                        // backgroundColor: 'red',
+                        // alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <View style={{
+                            gap: sizes.padding.sm,
+                            // backgroundColor: 'blue'
+                        }}>
+                            <Text style={{ ...text.header2 }}>Display Name</Text>
+                            <View style={{ padding: sizes.padding.md, backgroundColor: 'grey', borderRadius: sizes.padding.sm }} >
+                                <TextInput
+                                    placeholder={'Input your display name...'}
+                                    onSubmitEditing={(ev) => initializeSession(ev.nativeEvent.text)}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                </SafeAreaView>
+            </KeyboardAwareScrollView>
         );
     }
 
@@ -77,6 +86,17 @@ function Home() {
             <SafeAreaView>
                 <View style={{ padding: sizes.padding.md }}>
                     <View style={{ gap: sizes.padding.lg }} >
+                        <View style={{ padding: sizes.padding.md, backgroundColor: 'grey', borderRadius: sizes.padding.sm }} >
+                            <TextInput
+                                value={newDisplayName}
+                                onChangeText={setNewDisplayName}
+                                placeholder={'New Display Name'}
+                            />
+                        </View>
+                        <Button
+                            title={'Change Display Name'}
+                            onPress={() => changeDisplayName(newDisplayName)}
+                        />
                         <View>
                             <Text>Current location: {userLocation}</Text>
                         </View>
@@ -112,9 +132,6 @@ function Home() {
                         />
                         <View style={{ gap: sizes.padding.md }}>
                             <Text style={{ ...text.header2 }}>Found peers:</Text>
-                            {/* <View style={{ borderRadius: 100, backgroundColor: 'grey', width: 100, height: 100 }}>
-                                <Text></Text>
-                            </View> */}
                             <View style={{ flexDirection: 'row', gap: sizes.padding.md }}>
                                 {Object.entries(peers).map(([id, info]) => (
                                     <View key={id} style={{ alignItems: 'center' }}>
@@ -123,6 +140,9 @@ function Home() {
                                         </View>
                                         <Text style={{ ...text.body1 }}>{info.peer.displayName}</Text>
                                     </View>
+
+
+                                    // For Debug only
                                     // <View
                                     //     key={id}
                                     //     style={{

@@ -47,6 +47,24 @@ export const dummyArtefacts = [
             people: ['Kevin'],
         },
     },
+
+
+    // Andrew N. Liveris
+    // -27.499143723038042
+    // 153.01390536053944
+    {
+        type: 'photo',
+        content: require('./photos/AndrewLiveris/photo8.jpeg'),
+        contexts: {
+            location: {
+                name: 'Andrew N. Liveris',
+                latitude: -27.499143723038042,
+                longitude: 153.01390536053944
+            },
+            people: ['Audi'],
+        },
+    },
+
     {
         type: 'photo',
         content: require('./photos/AndrewLiveris/photo9.jpeg'),
@@ -56,7 +74,7 @@ export const dummyArtefacts = [
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
-            people: ['Jerome'],
+            people: ['Kevin'],
 
         },
     },
@@ -69,7 +87,7 @@ export const dummyArtefacts = [
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
-            people: ['Kevin'],
+            people: ['Jerome'],
         },
     },
     {
@@ -96,12 +114,96 @@ export const dummyArtefacts = [
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
-            people: ['Jerome'],
+            people: ['Jerome', 'Kevin'],
         },
     },
     {
         type: 'photo',
         content: require('./photos/AndrewLiveris/photo12.jpeg'),
+        contexts: {
+            location: {
+                name: 'Andrew N. Liveris',
+                latitude: -27.499143723038042,
+                longitude: 153.01390536053944
+            },
+            people: ['Wishnu', 'Kevin', 'Audi'],
+        },
+    },
+    {
+        type: 'photo',
+        content: require('./photos/AndrewLiveris/photo13.jpeg'),
+        contexts: {
+            location: {
+                name: 'Andrew N. Liveris',
+                latitude: -27.499143723038042,
+                longitude: 153.01390536053944
+            },
+            people: [],
+        },
+    },
+    {
+        type: 'photo',
+        content: require('./photos/AndrewLiveris/photo14.jpeg'),
+        contexts: {
+            location: {
+                name: 'Andrew N. Liveris',
+                latitude: -27.499143723038042,
+                longitude: 153.01390536053944
+            },
+            people: ['Wishnu'],
+        },
+    },
+    {
+        type: 'photo',
+        content: require('./photos/AndrewLiveris/photo15.jpeg'),
+        contexts: {
+            location: {
+                name: 'Andrew N. Liveris',
+                latitude: -27.499143723038042,
+                longitude: 153.01390536053944
+            },
+            people: ['Wishnu'],
+        },
+    },
+    {
+        type: 'photo',
+        content: require('./photos/AndrewLiveris/photo16.jpeg'),
+        contexts: {
+            location: {
+                name: 'Andrew N. Liveris',
+                latitude: -27.499143723038042,
+                longitude: 153.01390536053944
+            },
+            people: ['Jerome'],
+        },
+    },
+    {
+        type: 'photo',
+        content: require('./photos/AndrewLiveris/photo17.jpeg'),
+        contexts: {
+            location: {
+                name: 'Andrew N. Liveris',
+                latitude: -27.499143723038042,
+                longitude: 153.01390536053944
+            },
+            people: ['Jerome', 'Kevin', 'Audi'],
+        },
+    },
+    {
+        type: 'photo',
+        content: require('./photos/AndrewLiveris/photo18.jpeg'),
+        contexts: {
+            location: {
+                name: 'Andrew N. Liveris',
+                latitude: -27.499143723038042,
+                longitude: 153.01390536053944
+            },
+            people: ['Jerome'],
+        },
+    },
+    {
+        type: 'photo',
+        content: require('./photos/AndrewLiveris/photo19.jpeg'),
         contexts: {
             location: {
                 name: 'Andrew N. Liveris',
