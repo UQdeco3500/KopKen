@@ -57,7 +57,7 @@ export const dummyArtefacts = [
         content: require('./photos/AndrewLiveris/photo8.jpeg'),
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
@@ -70,7 +70,7 @@ export const dummyArtefacts = [
         content: require('./photos/AndrewLiveris/photo9.jpeg'),
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
@@ -83,7 +83,7 @@ export const dummyArtefacts = [
         content: require('./photos/AndrewLiveris/photo10.jpeg'),
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
@@ -98,7 +98,7 @@ export const dummyArtefacts = [
         },
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
@@ -110,7 +110,7 @@ export const dummyArtefacts = [
         content: require('./photos/AndrewLiveris/photo11.jpeg'),
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
@@ -122,7 +122,7 @@ export const dummyArtefacts = [
         content: require('./photos/AndrewLiveris/photo12.jpeg'),
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
@@ -134,7 +134,7 @@ export const dummyArtefacts = [
         content: require('./photos/AndrewLiveris/photo13.jpeg'),
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
@@ -146,7 +146,7 @@ export const dummyArtefacts = [
         content: require('./photos/AndrewLiveris/photo14.jpeg'),
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
@@ -158,7 +158,7 @@ export const dummyArtefacts = [
         content: require('./photos/AndrewLiveris/photo15.jpeg'),
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
@@ -170,7 +170,7 @@ export const dummyArtefacts = [
         content: require('./photos/AndrewLiveris/photo16.jpeg'),
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
@@ -182,7 +182,7 @@ export const dummyArtefacts = [
         content: require('./photos/AndrewLiveris/photo17.jpeg'),
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
@@ -194,7 +194,7 @@ export const dummyArtefacts = [
         content: require('./photos/AndrewLiveris/photo18.jpeg'),
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
@@ -206,7 +206,7 @@ export const dummyArtefacts = [
         content: require('./photos/AndrewLiveris/photo19.jpeg'),
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
@@ -218,13 +218,92 @@ export const dummyArtefacts = [
         content: 'Kebab Turqo',
         contexts: {
             location: {
-                name: 'Andrew N. Liveris',
+                name: 'University of Queensland', 
                 latitude: -27.499143723038042,
                 longitude: 153.01390536053944
             },
             people: ['Jerome', 'Kevin'],
         },
     },
+
+
+    // Sir James Foot
+    // -27.50034525759815
+    // 153.0143523453111
+    {
+        type: 'photo',
+        content: require('./photos/SirJamesFoot/photo1.jpeg'),
+        contexts: {
+            location: {
+                name: 'University of Queensland', 
+                latitude: -27.50034525759815,
+                longitude: 153.0143523453111
+            },
+            people: ['Jerome', 'Wishnu', 'Kevin'],
+        },
+    },
+    {
+        type: 'photo',
+        content: require('./photos/SirJamesFoot/photo2.jpeg'),
+        contexts: {
+            location: {
+                name: 'University of Queensland', 
+                latitude: -27.50034525759815,
+                longitude: 153.0143523453111
+            },
+            people: ['Yolanda'],
+        },
+    },
+    {
+        type: 'photo',
+        content: require('./photos/SirJamesFoot/photo3.jpeg'),
+        contexts: {
+            location: {
+                name: 'University of Queensland', 
+                latitude: -27.50034525759815,
+                longitude: 153.0143523453111
+            },
+            people: ['Audi'],
+        },
+    },
+    {
+        type: 'photo',
+        content: require('./photos/SirJamesFoot/photo4.jpeg'),
+        contexts: {
+            location: {
+                name: 'University of Queensland', 
+                latitude: -27.50034525759815,
+                longitude: 153.0143523453111
+            },
+            people: ['Jerome', 'Audi'],
+        },
+    },
+    {
+        type: 'photo',
+        content: require('./photos/SirJamesFoot/photo5.jpeg'),
+        contexts: {
+            location: {
+                name: 'University of Queensland', 
+                latitude: -27.50034525759815,
+                longitude: 153.0143523453111
+            },
+            people: ['Wishnu'],
+        },
+    },
+    {
+        type: 'photo',
+        content: require('./photos/SirJamesFoot/photo6.jpeg'),
+        contexts: {
+            location: {
+                name: 'University of Queensland', 
+                latitude: -27.50034525759815,
+                longitude: 153.0143523453111
+            },
+            people: ['Wishnu'],
+        },
+    },
+
+
 
     // ... other artefact objects
 ];

@@ -86,6 +86,7 @@ function Home() {
             <SafeAreaView>
                 <View style={{ padding: sizes.padding.md }}>
                     <View style={{ gap: sizes.padding.lg }} >
+                        <Text style={{ ...text.header2 }}>Hey, {displayName}</Text>
                         <View style={{ padding: sizes.padding.md, backgroundColor: 'grey', borderRadius: sizes.padding.sm }} >
                             <TextInput
                                 value={newDisplayName}
