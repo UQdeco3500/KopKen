@@ -59,5 +59,11 @@
 	<string>For location-awareness functionality</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>For location-awareness functionality</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>For context-awareness functionality</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_kenangan._tcp</string>
+	</array>
 </dict>
 </plist>

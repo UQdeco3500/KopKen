@@ -16,5 +16,8 @@ export const text = {
     header2: {
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    body1: {
+        fontSize: 20,
     }
 }
