@@ -8,6 +8,7 @@ import { dummyArtefacts } from '../data/dummyArtefacts';
 import { sizes, styles, colors } from '../data/theme';
 import { useMPC } from '../hooks/useMPC';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import pencilIcon from '../../src/data/icons/pencil.png';
 
 function HomeView({ navigation }) {
     const {
@@ -46,6 +47,11 @@ function HomeView({ navigation }) {
     );
 
     console.log('peers', nearbyPeers)
+
+    function disconnectBrowsing() {
+        stopBrowsing()
+        disconnect()
+    }
 
     if (!displayName) {
         return (
@@ -86,7 +92,10 @@ function HomeView({ navigation }) {
             <SafeAreaView>
                 <View style={{ padding: sizes.padding.md }}>
                     <View style={{ gap: sizes.padding.lg }} >
-                        <Text style={{ ...styles.text.header2 }}>Hey, {displayName}</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Text style={{ ...styles.text.header2 }}>Hey, {displayName}</Text>
+                            <Image source={pencilIcon} style={{ marginLeft: 10, width: 20, height: 20 }} />
+                        </View>
                         <View style={{ padding: sizes.padding.md, backgroundColor: 'grey', borderRadius: sizes.padding.sm }} >
                             <TextInput
                                 value={newDisplayName}
@@ -111,13 +120,13 @@ function HomeView({ navigation }) {
                                 trackColor={{ false: '#767577', true: '#23AE00' }}
                                 thumbColor={isBrowsing ? '#ffff' : '#f4f3f4'}
                                 ios_backgroundColor="#3e3e3e"
-                                onValueChange={isBrowsing ? stopBrowsing : startBrowsing}
+                                onValueChange={isBrowsing ? disconnectBrowsing : startBrowsing}
                                 value={isBrowsing}
                             />
                         </View>
                         <View style={styles.borderedButton}>
                             <View style={{ gap: sizes.padding.xs }}>
-                                <Text style={{ ...styles.text.body1 }} >Ghost Mode</Text>
+                                <Text style={{ ...styles.text.body1 }}>Ghost Mode</Text>
                                 <Text style={styles.text.body3} >In Ghost Mode, others won't find you.</Text>
                             </View>
                             <Switch
@@ -128,45 +137,48 @@ function HomeView({ navigation }) {
                                 value={!isAdvertizing}
                             />
                         </View>
-                        <Button
+                        {/* <Button
                             title={'disconnect'}
                             onPress={disconnect}
-                        />
+                        /> */}
                         <View style={{ gap: sizes.padding.md }}>
-                            <Text style={{ ...styles.text.header2 }}>Found peers:</Text>
-                            <View style={{ flexDirection: 'row', gap: sizes.padding.md }}>
-                                {Object.entries(peers).map(([id, info]) => (
-                                    <View key={id} style={{ alignItems: 'center' }}>
-                                        <View style={{ alignItems: 'center', justifyContent: 'center', borderRadius: 50, backgroundColor: 'grey', width: 50, height: 50 }}>
-                                            <Text style={{ ...styles.text.header1 }}>{info.peer.displayName[0]}</Text>
+                            {
+                                Object.entries(peers).length > 0 && (
+                                    <>
+                                        <Text style={{ ...styles.text.header2 }}>Found peers:</Text>
+                                        <View style={{ flexDirection: 'row', gap: sizes.padding.md }}>
+                                            {Object.entries(peers).map(([id, info]) => (
+                                                <View key={id} style={{ alignItems: 'center' }}>
+                                                    <View style={{ alignItems: 'center', justifyContent: 'center', borderRadius: 50, backgroundColor: 'grey', width: 50, height: 50 }}>
+                                                        <Text style={{ ...styles.text.header1 }}>{info.peer.displayName[0]}</Text>
+                                                    </View>
+                                                    <Text style={{ ...styles.text.body1 }}>{info.peer.displayName}</Text>
+                                                </View>
+                                                // For Debug only
+                                                // <View
+                                                //     key={id}
+                                                //     style={{
+                                                //         borderWidth: 1,
+                                                //         borderColor: 'black',
+                                                //         marginBottom: 10,
+                                                //         padding: 4,
+                                                //     }}
+                                                // >
+                                                //     <Pressable onPress={() => { /* whatever action you want here */ }}>
+                                                //         <Text>
+                                                //             {id} - {info.state}
+                                                //         </Text>
+                                                //         <Text>displayName: {info.peer.displayName}</Text>
+                                                //         <Text>discoveryInfo: {JSON.stringify(info.discoveryInfo)}</Text>
+                                                //     </Pressable>
+                                                // </View>
+                                            ))}
                                         </View>
-                                        <Text style={{ ...styles.text.body1 }}>{info.peer.displayName}</Text>
-                                    </View>
-
-
-                                    // For Debug only
-                                    // <View
-                                    //     key={id}
-                                    //     style={{
-                                    //         borderWidth: 1,
-                                    //         borderColor: 'black',
-                                    //         marginBottom: 10,
-                                    //         padding: 4,
-                                    //     }}
-                                    // >
-                                    //     <Pressable onPress={() => { /* whatever action you want here */ }}>
-                                    //         <Text>
-                                    //             {id} - {info.state}
-                                    //         </Text>
-                                    //         <Text>displayName: {info.peer.displayName}</Text>
-                                    //         <Text>discoveryInfo: {JSON.stringify(info.discoveryInfo)}</Text>
-                                    //     </Pressable>
-                                    // </View>
-                                ))}
-                            </View>
+                                    </>
+                                )}
                         </View>
                         <View style={{ borderWidth: 2, borderColor: colors.darkGrey, borderRadius: 25, padding: 10, backgroundColor: colors.darkGreyTransparent }}>
-                            <Text style={{ ...styles.text.header2, paddingBottom: 10, paddingTop: 10 }}>Artefacts</Text>
+                            <Text style={{ ...styles.text.header2, paddingBottom: 10, paddingTop: 10, paddingLeft: 10 }}>Artefacts</Text>
                             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                                 {matchingartefacts.map((artefact, index) => (
                                     <Pressable
@@ -181,14 +193,15 @@ function HomeView({ navigation }) {
                                                     // width: '100%'
                                                     width: '100%',
                                                     height: 150,
-                                                    borderRadius: 25
+                                                    borderRadius: 25,
                                                     // aspectRatio: 1
                                                 }} />
                                             )}
                                             {artefact.type === 'story' && (
                                                 <>
                                                     <Text style={styles.text.header2}>{artefact.content.title}</Text>
-                                                    <Text style={styles.text.body3}>{artefact.content.content}</Text>
+                                                    <Text style={styles.text.body3} numberOfLines={3}
+                                                        ellipsizeMode='tail'>{artefact.content.content}</Text>
                                                 </>
                                             )}
                                             {artefact.type === 'keyword' && (
@@ -204,8 +217,8 @@ function HomeView({ navigation }) {
                                                 </View>
                                                 <Text
                                                     style={[styles.text.body3, { flexShrink: 1 }]}
-                                                // numberOfLines={1}
-                                                // ellipsizeMode='tail'
+                                                    numberOfLines={2}
+                                                    ellipsizeMode='tail'
                                                 >
                                                     {artefact.contexts.location.name}
                                                 </Text>
