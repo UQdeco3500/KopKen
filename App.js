@@ -10,6 +10,7 @@ import StoreProvider from './src/context/Context'
 import MPC from './src/screens/MPC'
 import { MMKV } from 'react-native-mmkv'
 import ArtefactDetailView from './src/screens/ArtefactDetailView'
+import WidgetExampleView from './src/screens/WidgetExampleView'
 
 
 const Stack = createNativeStackNavigator();
@@ -33,6 +34,7 @@ function App(props) {
           }
         }}>
           {/* <Stack.Screen name='MPC' component={MPC} /> */}
+          {/* <Stack.Screen name='Widget Example' component={WidgetExampleView} /> */}
           <Stack.Screen name='Dashboard' component={HomeView} />
 
           {/* Settings */}

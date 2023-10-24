@@ -1,7 +1,7 @@
 export const dummyArtefacts = [
     {
         type: 'photo',
-        content: require('./photos/Iglu/photo1.jpeg'),
+        content: require('../../ios/KopKen/photos/Iglu/photo1.jpeg'),
         contexts: {
             location: {
                 name: 'Iglu Brisbane CBD',
@@ -13,7 +13,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/Iglu/photo2.jpeg'),
+        content: require('../../ios/KopKen/photos/Iglu/photo2.jpeg'),
         contexts: {
             location: {
                 name: 'Iglu Brisbane CBD',
@@ -25,7 +25,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/Iglu/photo3.jpeg'),
+        content: require('../../ios/KopKen/photos/Iglu/photo3.jpeg'),
         contexts: {
             location: {
                 name: 'Iglu Brisbane CBD',
@@ -37,7 +37,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/Iglu/photo4.jpeg'),
+        content: require('../../ios/KopKen/photos/Iglu/photo4.jpeg'),
         contexts: {
             location: {
                 name: 'Iglu Brisbane CBD',
@@ -54,7 +54,7 @@ export const dummyArtefacts = [
     // 153.01390536053944
     {
         type: 'photo',
-        content: require('./photos/AndrewLiveris/photo8.jpeg'),
+        content: require('../../ios/KopKen/photos/AndrewLiveris/photo8.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -67,7 +67,7 @@ export const dummyArtefacts = [
 
     {
         type: 'photo',
-        content: require('./photos/AndrewLiveris/photo9.jpeg'),
+        content: require('../../ios/KopKen/photos/AndrewLiveris/photo9.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -80,7 +80,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/AndrewLiveris/photo10.jpeg'),
+        content: require('../../ios/KopKen/photos/AndrewLiveris/photo10.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -107,7 +107,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/AndrewLiveris/photo11.jpeg'),
+        content: require('../../ios/KopKen/photos/AndrewLiveris/photo11.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -119,7 +119,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/AndrewLiveris/photo12.jpeg'),
+        content: require('../../ios/KopKen/photos/AndrewLiveris/photo12.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -131,7 +131,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/AndrewLiveris/photo13.jpeg'),
+        content: require('../../ios/KopKen/photos/AndrewLiveris/photo13.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -143,7 +143,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/AndrewLiveris/photo14.jpeg'),
+        content: require('../../ios/KopKen/photos/AndrewLiveris/photo14.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -155,7 +155,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/AndrewLiveris/photo15.jpeg'),
+        content: require('../../ios/KopKen/photos/AndrewLiveris/photo15.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -167,7 +167,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/AndrewLiveris/photo16.jpeg'),
+        content: require('../../ios/KopKen/photos/AndrewLiveris/photo16.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -179,7 +179,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/AndrewLiveris/photo17.jpeg'),
+        content: require('../../ios/KopKen/photos/AndrewLiveris/photo17.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -191,7 +191,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/AndrewLiveris/photo18.jpeg'),
+        content: require('../../ios/KopKen/photos/AndrewLiveris/photo18.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -203,7 +203,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/AndrewLiveris/photo19.jpeg'),
+        content: require('../../ios/KopKen/photos/AndrewLiveris/photo19.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -232,7 +232,7 @@ export const dummyArtefacts = [
     // 153.0143523453111
     {
         type: 'photo',
-        content: require('./photos/SirJamesFoot/photo1.jpeg'),
+        content: require('../../ios/KopKen/photos/SirJamesFoot/photo1.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -244,7 +244,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/SirJamesFoot/photo2.jpeg'),
+        content: require('../../ios/KopKen/photos/SirJamesFoot/photo2.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -256,7 +256,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/SirJamesFoot/photo3.jpeg'),
+        content: require('../../ios/KopKen/photos/SirJamesFoot/photo3.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -268,7 +268,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/SirJamesFoot/photo4.jpeg'),
+        content: require('../../ios/KopKen/photos/SirJamesFoot/photo4.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -280,7 +280,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/SirJamesFoot/photo5.jpeg'),
+        content: require('../../ios/KopKen/photos/SirJamesFoot/photo5.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 
@@ -292,7 +292,7 @@ export const dummyArtefacts = [
     },
     {
         type: 'photo',
-        content: require('./photos/SirJamesFoot/photo6.jpeg'),
+        content: require('../../ios/KopKen/photos/SirJamesFoot/photo6.jpeg'),
         contexts: {
             location: {
                 name: 'University of Queensland', 

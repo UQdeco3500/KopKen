@@ -61,6 +61,8 @@
 	<string>For location-awareness functionality</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>For context-awareness functionality</string>
+	<key>NSExtensionFileProviderDocumentGroup</key>
+	<string>group.com.kopken</string>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_kenangan._tcp</string>
