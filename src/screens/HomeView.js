@@ -8,7 +8,7 @@ import { dummyArtefacts } from '../data/dummyArtefacts';
 import { sizes, styles, colors } from '../data/theme';
 import { useMPC } from '../hooks/useMPC';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import pencilIcon from '../../src/data/icons/pencil.png';
+import pencilIcon from '../../src/assets/icons/pencil.png';
 
 function HomeView({ navigation }) {
     const {
