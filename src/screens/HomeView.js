@@ -8,6 +8,9 @@ import { dummyArtefacts } from '../data/dummyArtefacts';
 import { sizes, styles, colors } from '../data/theme';
 import { useMPC } from '../hooks/useMPC';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import usePhotoArtefacts from '../hooks/usePhotoArtefacts';
+import { storage } from '../../App';
+import Chip from '../components/Chip';
 
 function HomeView({ navigation }) {
     const {
@@ -25,9 +28,16 @@ function HomeView({ navigation }) {
         changeDisplayName
     } = useMPC();
 
+    const {
+        photos
+    } = usePhotoArtefacts()
+
     const [newDisplayName, setNewDisplayName] = useState('');
 
-    const userLocation = useUserLocation()
+    const {
+        locationName,
+        locationCoords
+    } = useUserLocation()
 
     const extractDisplayNames = (peers) => {
         return Object.values(peers).map(peerInfo => peerInfo.peer.displayName);
@@ -37,7 +47,7 @@ function HomeView({ navigation }) {
 
     const matchingartefacts = dummyArtefacts.filter(
         artefact =>
-            artefact.contexts.location.name === userLocation &&
+            artefact.contexts.location.name === locationName &&
             (Object.keys(peers).length === 0 ||
                 (artefact.contexts.people ?
                     artefact.contexts.people.some(peer => nearbyPeers.includes(peer))
@@ -45,7 +55,10 @@ function HomeView({ navigation }) {
             )
     );
 
-    console.log('peers', nearbyPeers)
+    // console.log('peers', nearbyPeers)
+    // console.log('photos', photos)
+    // storage.clearAll()
+
 
     if (!displayName) {
         return (
@@ -100,7 +113,7 @@ function HomeView({ navigation }) {
                         />
                         <View>
                             <Text style={{ ...styles.text.body1 }}>Current location:</Text>
-                            <Text style={{ ...styles.text.header2 }}>{userLocation}</Text>
+                            <Text style={{ ...styles.text.header2 }}>{locationName}</Text>
                         </View>
                         <View style={styles.borderedButton}>
                             <View style={{ gap: sizes.padding.xs }}>
@@ -172,7 +185,7 @@ function HomeView({ navigation }) {
                         <View style={{ borderWidth: 2, borderColor: colors.darkGrey, borderRadius: 25, padding: 10, backgroundColor: colors.darkGreyTransparent }}>
                             <Text style={{ ...styles.text.header2, paddingBottom: 10, paddingTop: 10 }}>Artefacts</Text>
                             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                                {matchingartefacts.map((artefact, index) => (
+                                {/* {matchingartefacts.map((artefact, index) => (
                                     <Pressable
                                         key={index}
                                         onPress={() => navigation.navigate('Artefact Detail', { artefact })}
@@ -216,7 +229,25 @@ function HomeView({ navigation }) {
                                             </View>
                                         </View>
                                     </Pressable>
-                                ))}
+                                ))} */}
+                                {photos.map(photo => {
+                                    return (
+                                        <Pressable
+                                            key={photo.id}
+                                            onPress={() => navigation.navigate('Artefact Detail', { photo })}
+                                        >
+                                            <Image
+                                                style={{
+                                                    width: 100,
+                                                    height: 100
+                                                }}
+                                                source={{
+                                                    uri: `file://${photo.path}`,  // Ensure the file path is correct
+                                                }}
+                                            />
+                                        </Pressable>
+                                    )
+                                })}
                             </View>
                         </View>
                     </View>

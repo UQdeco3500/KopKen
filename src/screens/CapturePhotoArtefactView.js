@@ -12,17 +12,30 @@ import {
 } from 'react-native';
 import { Camera, useCameraDevice, useCameraDevices } from 'react-native-vision-camera';
 import { sizes } from '../data/theme';
+import usePhotoArtefacts from '../hooks/usePhotoArtefacts';
+import { useUserLocation } from '../context/Context';
+import { storage } from '../../App';
 
-function CapturePhotoArtefactView() {
+function CapturePhotoArtefactView({ navigation }) {
+
+    const {
+        photos,
+        addPhoto
+    } = usePhotoArtefacts()
+
+    const userLocation = useUserLocation()
+    const { locationName, locationData } = userLocation
+
+    console.log('userLocation', locationName)
+
     const camera = useRef(null);
     const devices = useCameraDevices();
     // const device = devices.back;
     const device = useCameraDevice('back')
-
-    console.log(device)
-
-    const [showCamera, setShowCamera] = useState(false);
+    // console.log(device)
+    const [showCamera, setShowCamera] = useState(true);
     const [imageSource, setImageSource] = useState('');
+    const [imageObject, setImageObject] = useState({})
 
     // Grant Permission first
     useEffect(() => {
@@ -37,10 +50,30 @@ function CapturePhotoArtefactView() {
         if (camera.current !== null) {
             const photo = await camera.current.takePhoto({});
             setImageSource(photo.path);
+            setImageObject(photo)
             setShowCamera(false);
-            console.log(photo.path);
+            console.log(photo);
         }
     };
+
+    const savePhoto = (newPhoto, locationData, peopleData) => {
+        addPhoto(newPhoto, locationData, peopleData);
+        setShowCamera(true);
+    }
+
+    const savePhotoPath = (photoPath) => {
+        console.log(photoPath)
+        const existingPhotos = JSON.parse(storage.getString('photos') || '[]');
+        existingPhotos.push(photoPath);
+        storage.set('photos', JSON.stringify(existingPhotos));
+        setShowCamera(true);
+
+    };
+
+    const handleBackButton = () => {
+        setShowCamera(false)
+        navigation.navigate('Dashboard')
+    }
 
     if (device == null) {
         return <Text>Camera not available</Text>;
@@ -56,26 +89,44 @@ function CapturePhotoArtefactView() {
                         device={device}
                         isActive={showCamera}
                         photo={true}
-                    />
-                    <Image style={{
-                        backgroundColor: 'rgba(255,0,0,.4)',
-                        position: 'absolute',
-                        flex: 1,
-                        top: 0,
-                        height: '100%',
-                        width: '100%',
-                        opacity: .2
-                    }}
-                        source={{
-                            uri: `file://'${imageSource}`,
-                        }}
-                    />
+                    >
+                        <Image
+                            style={{
+                                backgroundColor: 'rgba(255,0,0,.4)',
+                                position: 'absolute',
+                                flex: 1,
+                                top: 0,
+                                height: '100%',
+                                width: '100%',
+                                opacity: .2,
+                            }}
+                            source={{
+                                uri: `file://'${imageSource}`,
+                            }}
+                        />
+                    </Camera>
                     <View style={styles.buttonContainer}>
                         <Pressable
                             style={styles.camButton}
                             onPress={() => capturePhoto()}
                         />
                     </View>
+                    <View style={{
+                        backgroundColor: 'rgba(0,0,0,0.2)',
+                        position: 'absolute',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '100%',
+                        top: 0,
+                        padding: sizes.padding.lg,
+                        paddingTop: sizes.padding.lg * 2
+                    }}>
+                        <Pressable
+                            style={styles.camButton}
+                            onPress={handleBackButton}
+                        />
+                    </View>
+
 
                 </>
             ) : (
@@ -132,7 +183,7 @@ function CapturePhotoArtefactView() {
                                     borderWidth: 2,
                                     borderColor: 'white',
                                 }}
-                                onPress={() => setShowCamera(true)}>
+                                onPress={() => savePhoto(imageObject, userLocation, [])}>
                                 <Text style={{ color: 'white', fontWeight: '500' }}>
                                     Use Photo
                                 </Text>

@@ -39,7 +39,7 @@ function App(props) {
           {/* Settings */}
           <Stack.Group screenOptions={{ headerShown: true }}>
             <Stack.Screen name='Reminisce' component={Reminisce} options={{ ...nestedHeaderOptions, headerBackTitle: 'HomeView' }} />
-            <Stack.Screen name='Artefact Detail' component={ArtefactDetailView} options={{ ...nestedHeaderOptions, headerBackTitle: 'HomeView' }} />
+            <Stack.Screen name='Artefact Detail' component={ArtefactDetailView} options={{ ...nestedHeaderOptions, headerBackTitle: 'Dashboard' }} />
           </Stack.Group>
 
           <Stack.Screen name='Capture Photo' component={CapturePhotoArtefactView} options={{ ...nestedHeaderOptions, headerBackTitle: 'HomeView' }} />
