@@ -172,5 +172,20 @@ export const styles = {
                 fontFamily: 'Merriweather'
             },
         }
-    }
+    },
+    borderedButton: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: colors.darkGrey,
+        borderRadius: 50,
+        padding: 20,
+        backgroundColor: colors.darkGreyTransparent,
+        marginTop: -10,
+        marginBottom: -10,
+        // marginLeft: -5,
+        // marginRight: -5,
+
+    },
 }
