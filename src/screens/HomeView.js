@@ -42,13 +42,13 @@ function HomeView({ navigation }) {
     } = useUserLocation()
 
 
-    const matchingartefacts = dummyArtefacts.filter(
-        artefact =>
-            artefact.contexts.location.name === locationName &&
+    const matchingartefacts = photos.filter(
+        photo =>
+            photo.contexts.location.locationName === locationName &&
             (Object.keys(peers).length === 0 ||
-                (artefact.contexts.people ?
-                    artefact.contexts.people.some(peer => nearbyPeers.includes(peer))
-                    : true)
+                (photo.contexts.people.length === 0 ? true :
+                    photo.contexts.people?.some(person => extractDisplayNames(peers).includes(person))
+                )
             )
     );
 
@@ -228,7 +228,7 @@ function HomeView({ navigation }) {
                                         </View>
                                     </Pressable>
                                 ))} */}
-                                {photos.map(photo => {
+                                {matchingartefacts.map(photo => {
                                     return (
                                         <Pressable
                                             key={photo.id}
@@ -243,6 +243,17 @@ function HomeView({ navigation }) {
                                                     uri: `file://${photo.path}`,  // Ensure the file path is correct
                                                 }}
                                             />
+                                            <Text></Text>
+                                            {photo.contexts.people.map(person => {
+                                                return (
+                                                    <Text
+                                                        key={person}
+                                                        style={styles.text.body3}
+                                                    >
+                                                        {person}
+                                                    </Text>
+                                                )
+                                            })}
                                         </Pressable>
                                     )
                                 })}
