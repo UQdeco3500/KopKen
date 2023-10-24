@@ -21,9 +21,11 @@ function ArtefactDetailView({ navigation, route }) {
                     <Image
                         source={artefact.content}
                         style={{
-                            flex: 1,
+                            // flex: 1,
                             width: '100%',
-                            resizeMode: 'cover'
+                            height: '500%',
+                            // resizeMode: 'contain'
+                            // aspectRatio: 1
                         }}
                     />
                     <Chip
