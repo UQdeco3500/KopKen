@@ -153,7 +153,7 @@ function HomeView({ navigation }) {
                             {
                                 Object.entries(peers).length > 0 && (
                                     <>
-                                        <Text style={{ ...styles.text.header2 }}>Found peers:</Text>
+                                        <Text style={{ ...styles.text.header2 }}>People Near You:</Text>
                                         <View style={{ flexDirection: 'row', gap: sizes.padding.md }}>
                                             {Object.entries(peers).map(([id, info]) => (
                                                 <View key={id} style={{ alignItems: 'center' }}>
