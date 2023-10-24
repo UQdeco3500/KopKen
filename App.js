@@ -29,7 +29,7 @@ function App(props) {
           headerShown: false,
           // contentStyle: { backgroundColor: 'transparent' } 
           contentStyle: {
-            backgroundColor: 'black'
+            backgroundColor: '#1F1F1F'
           }
         }}>
           {/* <Stack.Screen name='MPC' component={MPC} /> */}
