@@ -132,6 +132,10 @@ function HomeView({ navigation }) {
                             title={'disconnect'}
                             onPress={disconnect}
                         />
+                        <Button
+                            title='Capture Photo'
+                            onPress={() => navigation.navigate('Capture Photo')}
+                        />
                         <View style={{ gap: sizes.padding.md }}>
                             <Text style={{ ...styles.text.header2 }}>Found peers:</Text>
                             <View style={{ flexDirection: 'row', gap: sizes.padding.md }}>

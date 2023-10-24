@@ -10,6 +10,7 @@ import StoreProvider from './src/context/Context'
 import MPC from './src/screens/MPC'
 import { MMKV } from 'react-native-mmkv'
 import ArtefactDetailView from './src/screens/ArtefactDetailView'
+import CapturePhotoArtefactView from './src/screens/CapturePhotoArtefactView'
 
 
 const Stack = createNativeStackNavigator();
@@ -40,6 +41,8 @@ function App(props) {
             <Stack.Screen name='Reminisce' component={Reminisce} options={{ ...nestedHeaderOptions, headerBackTitle: 'HomeView' }} />
             <Stack.Screen name='Artefact Detail' component={ArtefactDetailView} options={{ ...nestedHeaderOptions, headerBackTitle: 'HomeView' }} />
           </Stack.Group>
+
+          <Stack.Screen name='Capture Photo' component={CapturePhotoArtefactView} options={{ ...nestedHeaderOptions, headerBackTitle: 'HomeView' }} />
 
 
 
