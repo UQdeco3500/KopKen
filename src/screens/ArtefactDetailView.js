@@ -29,7 +29,7 @@ function ArtefactDetailView({ navigation, route }) {
         }
     }
 
-    console.log('currentPhotoDetail', photo)
+    console.log('currentPhotoDetail', photo.contexts)
     return (
         <ScrollView style={{ flex: 1 }} contentInsetAdjustmentBehavior='automatic'>
             <SafeAreaView style={{ flex: 1 }}>

@@ -4,6 +4,7 @@ import { predefinedLocations } from '../data/predefinedLocations';
 import Geolocation from '@react-native-community/geolocation';
 import { assignLocationName, isWithinRadius } from '../helpers/locationServices';
 import PhotoArtefactsProvider from './PhotoArtefactsProvider';
+import NearbyPeersProvider from './NearbyPeersProvider';
 
 
 const LocationContext = createContext(null)
@@ -35,11 +36,13 @@ function StoreProvider({ children }) {
     }, []);
 
     return (
-        <PhotoArtefactsProvider>
-            <LocationContext.Provider value={userLocation}>
-                {children}
-            </LocationContext.Provider>
-        </PhotoArtefactsProvider>
+        <LocationContext.Provider value={userLocation}>
+            <NearbyPeersProvider>
+                <PhotoArtefactsProvider>
+                    {children}
+                </PhotoArtefactsProvider>
+            </NearbyPeersProvider>
+        </LocationContext.Provider>
     )
 }
 

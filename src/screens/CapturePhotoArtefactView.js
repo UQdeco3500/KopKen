@@ -15,6 +15,8 @@ import { sizes } from '../data/theme';
 import usePhotoArtefacts from '../hooks/usePhotoArtefacts';
 import { useUserLocation } from '../context/Context';
 import { storage } from '../../App';
+import { useMPC } from '../hooks/useMPC';
+import { extractDisplayNames, useNearbyPeersContext } from '../context/NearbyPeersProvider';
 
 function CapturePhotoArtefactView({ navigation }) {
 
@@ -27,6 +29,14 @@ function CapturePhotoArtefactView({ navigation }) {
     const { locationName, locationData } = userLocation
 
     console.log('userLocation', locationName)
+
+    const {
+        nearbyPeers,
+        peers
+    } = useNearbyPeersContext()
+
+    console.log('nearbyPeers', nearbyPeers)
+    console.log('peers', peers)
 
     const camera = useRef(null);
     const devices = useCameraDevices();
@@ -56,19 +66,19 @@ function CapturePhotoArtefactView({ navigation }) {
         }
     };
 
-    const savePhoto = (newPhoto, locationData, peopleData) => {
-        addPhoto(newPhoto, locationData, peopleData);
+    const savePhoto = (newPhoto, locationData) => {
+        addPhoto(newPhoto, locationData, extractDisplayNames(peers));
         setShowCamera(true);
     }
 
-    const savePhotoPath = (photoPath) => {
-        console.log(photoPath)
-        const existingPhotos = JSON.parse(storage.getString('photos') || '[]');
-        existingPhotos.push(photoPath);
-        storage.set('photos', JSON.stringify(existingPhotos));
-        setShowCamera(true);
+    // const savePhotoPath = (photoPath) => {
+    //     console.log(photoPath)
+    //     const existingPhotos = JSON.parse(storage.getString('photos') || '[]');
+    //     existingPhotos.push(photoPath);
+    //     storage.set('photos', JSON.stringify(existingPhotos));
+    //     setShowCamera(true);
 
-    };
+    // };
 
     const handleBackButton = () => {
         setShowCamera(false)
@@ -183,7 +193,7 @@ function CapturePhotoArtefactView({ navigation }) {
                                     borderWidth: 2,
                                     borderColor: 'white',
                                 }}
-                                onPress={() => savePhoto(imageObject, userLocation, [])}>
+                                onPress={() => savePhoto(imageObject, userLocation)}>
                                 <Text style={{ color: 'white', fontWeight: '500' }}>
                                     Use Photo
                                 </Text>

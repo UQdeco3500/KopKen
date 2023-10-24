@@ -1,11 +1,11 @@
-// hooks/useMPC.js
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import { initSession, PeerState } from 'react-native-multipeer-connectivity';
 import { produce } from 'immer';
 import { storage } from '../../App';
 
+const NearbyPeersContext = createContext(null)
 
-export const useMPC = () => {
+function NearbyPeersProvider({ children }) {
     const [displayName, setDisplayName] = useState('');
     const [peerID, setPeerID] = useState('');
     const [isBrowsing, setIsBrowsing] = useState(false);
@@ -43,6 +43,107 @@ export const useMPC = () => {
         storage.set("currentUser", name);
     };
 
+    useEffect(() => {
+        if (!session) return;
+        const sessionAdvertiseError = session.onStartAdvertisingError((ev) => {
+            setIsAdvertizing(false);
+            console.log('onStartAdvertisingError：', ev);
+        });
+        const sessionBrowseError = session.onStartBrowsingError((ev) => {
+            setIsBrowsing(false);
+            console.log('onStartBrowsingError：', ev);
+        });
+        const sessionFoundPeer = session.onFoundPeer((ev) => {
+            setPeers(
+                produce((draft) => {
+                    // onFoundPeer will be called even if the peer found before when you re-advertize
+                    if (!draft[ev.peer.id]) {
+                        draft[ev.peer.id] = {
+                            peer: ev.peer,
+                            state: PeerState.notConnected,
+                            discoveryInfo: ev.discoveryInfo,
+                        };
+                    }
+                })
+            );
+            updateNearbyPeers();  // update nearbyPeers whenever a peer is found
+            console.log('onFoundPeer：', ev);
+        });
+        const sessionLostPeer = session.onLostPeer((ev) => {
+            console.log('onLostPeer：', ev);
+            setPeers(
+                produce((draft) => {
+                    delete draft[ev.peer.id];
+                })
+            );
+            updateNearbyPeers();
+        });
+        const sessionPeerStateChanged = session.onPeerStateChanged((ev) => {
+            console.log('onPeerStateChanged：', ev);
+            setPeers(
+                produce((draft) => {
+                    if (draft[ev.peer.id]) draft[ev.peer.id].state = ev.state;
+                    else {
+                        draft[ev.peer.id] = {
+                            state: ev.state,
+                            peer: ev.peer,
+                        };
+                    }
+                })
+            );
+        });
+        const sessionReceivePeerInvitation = session.onReceivedPeerInvitation((ev) => {
+            console.log('onReceivedPeerInvitation：', ev);
+            ev.handler(true);
+        });
+        const sessionReceiveText = session.onReceivedText((ev) => {
+            console.log('onReceivedText：', ev);
+            setReceivedMessages(
+                produce((draft) => {
+                    if (draft[ev.peer.id]) draft[ev.peer.id].push(ev.text);
+                    else draft[ev.peer.id] = [ev.text];
+                })
+            );
+        });
+
+        return () => {
+            session.stopAdvertizing();
+            session.stopBrowsing();
+            sessionAdvertiseError.remove();
+            sessionBrowseError.remove();
+            sessionFoundPeer.remove();
+            sessionLostPeer.remove();
+            sessionPeerStateChanged.remove();
+            sessionReceivePeerInvitation.remove();
+            sessionReceiveText.remove();
+        };
+    }, [session]);
+
+    const updateNearbyPeers = () => {
+        const newNearbyPeers = extractDisplayNames(peers);
+        setNearbyPeers(newNearbyPeers);
+    };
+
+
+    const changeDisplayName = (newDisplayName) => {
+        // Disconnect the current session
+        disconnect();
+
+        // Wait a moment to ensure disconnection
+        setTimeout(() => {
+            // Re-initialize session with the new displayName
+            initializeSession(newDisplayName);
+
+            // Optionally restart advertising and/or browsing
+            if (isAdvertizing) {
+                startAdvertising();
+            }
+            if (isBrowsing) {
+                startBrowsing();
+            }
+        }, 1000);  // 1 second delay, adjust as needed
+    };
+
     const startAdvertising = () => {
         session?.advertize();
         setIsAdvertizing(true);
@@ -70,112 +171,8 @@ export const useMPC = () => {
         setPeers({});
     }
 
-    const changeDisplayName = (newDisplayName) => {
-        // Disconnect the current session
-        disconnect();
 
-        // Wait a moment to ensure disconnection
-        setTimeout(() => {
-            // Re-initialize session with the new displayName
-            initializeSession(newDisplayName);
-
-            // Optionally restart advertising and/or browsing
-            if (isAdvertizing) {
-                startAdvertising();
-            }
-            if (isBrowsing) {
-                startBrowsing();
-            }
-        }, 1000);  // 1 second delay, adjust as needed
-    };
-
-    useEffect(() => {
-        if (!session) return;
-        const r1 = session.onStartAdvertisingError((ev) => {
-            setIsAdvertizing(false);
-            console.log('onStartAdvertisingError：', ev);
-        });
-        const r2 = session.onStartBrowsingError((ev) => {
-            setIsBrowsing(false);
-            console.log('onStartBrowsingError：', ev);
-        });
-        const r3 = session.onFoundPeer((ev) => {
-            setPeers(
-                produce((draft) => {
-                    // onFoundPeer will be called even if the peer found before when you re-advertize
-                    if (!draft[ev.peer.id]) {
-                        draft[ev.peer.id] = {
-                            peer: ev.peer,
-                            state: PeerState.notConnected,
-                            discoveryInfo: ev.discoveryInfo,
-                        };
-                    }
-                })
-            );
-            updateNearbyPeers();  // update nearbyPeers whenever a peer is found
-            console.log('onFoundPeer：', ev);
-        });
-        const r4 = session.onLostPeer((ev) => {
-            console.log('onLostPeer：', ev);
-            setPeers(
-                produce((draft) => {
-                    delete draft[ev.peer.id];
-                })
-            );
-            updateNearbyPeers();
-        });
-        const r5 = session.onPeerStateChanged((ev) => {
-            console.log('onPeerStateChanged：', ev);
-            setPeers(
-                produce((draft) => {
-                    if (draft[ev.peer.id]) draft[ev.peer.id].state = ev.state;
-                    else {
-                        draft[ev.peer.id] = {
-                            state: ev.state,
-                            peer: ev.peer,
-                        };
-                    }
-                })
-            );
-        });
-        const r6 = session.onReceivedPeerInvitation((ev) => {
-            console.log('onReceivedPeerInvitation：', ev);
-            ev.handler(true);
-        });
-        const r7 = session.onReceivedText((ev) => {
-            console.log('onReceivedText：', ev);
-            setReceivedMessages(
-                produce((draft) => {
-                    if (draft[ev.peer.id]) draft[ev.peer.id].push(ev.text);
-                    else draft[ev.peer.id] = [ev.text];
-                })
-            );
-        });
-
-        return () => {
-            session.stopAdvertizing();
-            session.stopBrowsing();
-            r1.remove();
-            r2.remove();
-            r3.remove();
-            r4.remove();
-            r5.remove();
-            r6.remove();
-            r7.remove();
-        };
-    }, [session]);
-
-
-    const updateNearbyPeers = () => {
-        const newNearbyPeers = extractDisplayNames(peers);
-        setNearbyPeers(newNearbyPeers);
-    };
-
-    const extractDisplayNames = (peers) => {
-        return Object.values(peers).map(peerInfo => peerInfo.peer.displayName);
-    };
-
-    return {
+    const value = {
         displayName,
         setDisplayName,
         initializeSession,
@@ -189,5 +186,23 @@ export const useMPC = () => {
         peers,
         changeDisplayName,
         nearbyPeers
-    };
+    }
+
+    return (
+        <NearbyPeersContext.Provider value={value}>
+            {children}
+        </NearbyPeersContext.Provider>
+    )
+}
+
+NearbyPeersProvider.propTypes = {}
+
+export default NearbyPeersProvider
+
+export function useNearbyPeersContext() {
+    return useContext(NearbyPeersContext)
+}
+
+export const extractDisplayNames = (peers) => {
+    return Object.values(peers).map(peerInfo => peerInfo.peer.displayName);
 };

@@ -11,6 +11,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import usePhotoArtefacts from '../hooks/usePhotoArtefacts';
 import { storage } from '../../App';
 import Chip from '../components/Chip';
+import { extractDisplayNames, useNearbyPeersContext } from '../context/NearbyPeersProvider';
 
 function HomeView({ navigation }) {
     const {
@@ -25,8 +26,9 @@ function HomeView({ navigation }) {
         stopAdvertising,
         disconnect,
         peers,
-        changeDisplayName
-    } = useMPC();
+        changeDisplayName,
+        nearbyPeers
+    } = useNearbyPeersContext();
 
     const {
         photos
@@ -39,11 +41,6 @@ function HomeView({ navigation }) {
         locationCoords
     } = useUserLocation()
 
-    const extractDisplayNames = (peers) => {
-        return Object.values(peers).map(peerInfo => peerInfo.peer.displayName);
-    };
-
-    const nearbyPeers = extractDisplayNames(peers);
 
     const matchingartefacts = dummyArtefacts.filter(
         artefact =>
@@ -55,7 +52,8 @@ function HomeView({ navigation }) {
             )
     );
 
-    // console.log('peers', nearbyPeers)
+    console.log('nearbyPeers', extractDisplayNames(peers))
+    console.log('peers', peers)
     // console.log('photos', photos)
     // storage.clearAll()
 
