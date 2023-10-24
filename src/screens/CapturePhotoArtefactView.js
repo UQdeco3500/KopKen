@@ -76,7 +76,8 @@ function CapturePhotoArtefactView({ navigation, route }) {
             const groupId = toRecreate.groupId || toRecreate.id;
             addPhoto(newPhoto, locationData, extractDisplayNames(peers), groupId);
         } else {
-            addPhoto(newPhoto, locationData, extractDisplayNames(peers));
+            const newGroupId = Date.now();  // Generate a new groupId for initial photos
+            addPhoto(newPhoto, locationData, extractDisplayNames(peers), newGroupId);
         }
         setShowCamera(true);
     }

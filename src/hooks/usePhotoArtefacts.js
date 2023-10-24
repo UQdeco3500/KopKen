@@ -18,6 +18,7 @@ function usePhotoArtefacts(props) {
     }
 
     const addPhoto = (newPhoto, locationData, peopleData, groupId) => {
+        const newGroupId = groupId || Date.now();  // If groupId is not provided, generate a new one
         getAllPhotos();
         dispatchPhotos({
             type: 'addPhoto',
@@ -25,7 +26,7 @@ function usePhotoArtefacts(props) {
                 id: Date.now(),
                 dateAdded: Date.now(),
                 ...newPhoto,
-                groupId: groupId,
+                groupId: newGroupId,  // Use the provided or generated groupId
                 contexts: {
                     location: locationData,
                     people: peopleData,
