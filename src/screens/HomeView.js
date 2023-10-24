@@ -5,11 +5,11 @@ import Geolocation from '@react-native-community/geolocation';
 import { predefinedLocations } from '../data/predefinedLocations';
 import { useUserLocation } from '../context/Context';
 import { dummyArtefacts } from '../data/dummyArtefacts';
-import { sizes, text } from '../data/theme';
+import { sizes, styles, colors } from '../data/theme';
 import { useMPC } from '../hooks/useMPC';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-function Home() {
+function HomeView({ navigation }) {
     const {
         displayName,
         setDisplayName,
@@ -67,7 +67,7 @@ function Home() {
                             gap: sizes.padding.sm,
                             // backgroundColor: 'blue'
                         }}>
-                            <Text style={{ ...text.header2 }}>Display Name</Text>
+                            <Text style={{ ...styles.text.header2 }}>Display Name</Text>
                             <View style={{ padding: sizes.padding.md, backgroundColor: 'grey', borderRadius: sizes.padding.sm }} >
                                 <TextInput
                                     placeholder={'Input your display name...'}
@@ -86,7 +86,7 @@ function Home() {
             <SafeAreaView>
                 <View style={{ padding: sizes.padding.md }}>
                     <View style={{ gap: sizes.padding.lg }} >
-                        <Text style={{ ...text.header2 }}>Hey, {displayName}</Text>
+                        <Text style={{ ...styles.text.header2 }}>Hey, {displayName}</Text>
                         <View style={{ padding: sizes.padding.md, backgroundColor: 'grey', borderRadius: sizes.padding.sm }} >
                             <TextInput
                                 value={newDisplayName}
@@ -99,29 +99,30 @@ function Home() {
                             onPress={() => changeDisplayName(newDisplayName)}
                         />
                         <View>
-                            <Text>Current location: {userLocation}</Text>
+                            <Text style={{ ...styles.text.body1 }}>Current location:</Text>
+                            <Text style={{ ...styles.text.header2 }}>{userLocation}</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <View style={styles.borderedButton}>
                             <View style={{ gap: sizes.padding.xs }}>
-                                <Text style={{ ...text.body1 }} >Browse Mode</Text>
-                                <Text>Turn on if you want to find others.</Text>
+                                <Text style={{ ...styles.text.body1 }} >Browse Mode</Text>
+                                <Text style={styles.text.body3} >Turn on if you want to find others.</Text>
                             </View>
                             <Switch
-                                trackColor={{ false: '#767577', true: '#81b0ff' }}
-                                thumbColor={isBrowsing ? '#f5dd4b' : '#f4f3f4'}
+                                trackColor={{ false: '#767577', true: '#23AE00' }}
+                                thumbColor={isBrowsing ? '#ffff' : '#f4f3f4'}
                                 ios_backgroundColor="#3e3e3e"
                                 onValueChange={isBrowsing ? stopBrowsing : startBrowsing}
                                 value={isBrowsing}
                             />
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <View style={styles.borderedButton}>
                             <View style={{ gap: sizes.padding.xs }}>
-                                <Text style={{ ...text.body1 }} >Ghost Mode</Text>
-                                <Text>In Ghost Mode, others won't find you.</Text>
+                                <Text style={{ ...styles.text.body1 }} >Ghost Mode</Text>
+                                <Text style={styles.text.body3} >In Ghost Mode, others won't find you.</Text>
                             </View>
                             <Switch
-                                trackColor={{ false: '#767577', true: '#81b0ff' }}
-                                thumbColor={isAdvertizing ? '#f5dd4b' : '#f4f3f4'}
+                                trackColor={{ false: '#767577', true: '#23AE00' }}
+                                thumbColor={isAdvertizing ? '#ffff' : '#f4f3f4'}
                                 ios_backgroundColor="#3e3e3e"
                                 onValueChange={isAdvertizing ? stopAdvertising : startAdvertising}
                                 value={!isAdvertizing}
@@ -132,14 +133,14 @@ function Home() {
                             onPress={disconnect}
                         />
                         <View style={{ gap: sizes.padding.md }}>
-                            <Text style={{ ...text.header2 }}>Found peers:</Text>
+                            <Text style={{ ...styles.text.header2 }}>Found peers:</Text>
                             <View style={{ flexDirection: 'row', gap: sizes.padding.md }}>
                                 {Object.entries(peers).map(([id, info]) => (
                                     <View key={id} style={{ alignItems: 'center' }}>
                                         <View style={{ alignItems: 'center', justifyContent: 'center', borderRadius: 50, backgroundColor: 'grey', width: 50, height: 50 }}>
-                                            <Text style={{ ...text.header1 }}>{info.peer.displayName[0]}</Text>
+                                            <Text style={{ ...styles.text.header1 }}>{info.peer.displayName[0]}</Text>
                                         </View>
-                                        <Text style={{ ...text.body1 }}>{info.peer.displayName}</Text>
+                                        <Text style={{ ...styles.text.body1 }}>{info.peer.displayName}</Text>
                                     </View>
 
 
@@ -164,37 +165,53 @@ function Home() {
                                 ))}
                             </View>
                         </View>
-                        <View style={{ gap: sizes.padding.md }}>
-                            <Text style={{ ...text.header2 }}>Artefacts</Text>
-                            <View style={{ flexDirection: 'row', gap: sizes.padding.md, flexWrap: 'wrap' }}>
+                        <View style={{ borderWidth: 2, borderColor: colors.darkGrey, borderRadius: 25, padding: 10, backgroundColor: colors.darkGreyTransparent }}>
+                            <Text style={{ ...styles.text.header2, paddingBottom: 10, paddingTop: 10 }}>Artefacts</Text>
+                            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                                 {matchingartefacts.map((artefact, index) => (
-                                    <View key={index}>
-                                        {artefact.type === 'photo' && (
-                                            <Image source={artefact.content} style={{
-                                                // flex: 1,
-                                                // width: '100%'
-                                                width: 100,
-                                                height: 100
-                                            }} />
-                                        )}
-                                        {artefact.type === 'story' && (
-                                            <>
-                                                <Text style={text.header2}>{artefact.content.title}</Text>
-                                                <Text>{artefact.content.content}</Text>
-                                            </>
-                                        )}
-                                        {artefact.type === 'keyword' && (
-                                            <Text style={{ ...text.header2, fontStyle: 'italic' }}>{artefact.content}</Text>
-                                        )}
-                                        <Text>{artefact.contexts.location.name}</Text>
+                                    <Pressable
+                                        key={index}
+                                        onPress={() => navigation.navigate('Artefact Detail', { artefact })}
+                                        style={{ width: '44%', margin: '3%' }}
+                                    >
                                         <View>
-                                            {artefact.contexts.people?.map((person, index) => {
-                                                return (
-                                                    <Text key={`${person}-${index}`}>{person}</Text>
-                                                )
-                                            })}
+                                            {artefact.type === 'photo' && (
+                                                <Image source={artefact.content} style={{
+                                                    // flex: 1,
+                                                    // width: '100%'
+                                                    width: '100%',
+                                                    height: 150,
+                                                    borderRadius: 25
+                                                    // aspectRatio: 1
+                                                }} />
+                                            )}
+                                            {artefact.type === 'story' && (
+                                                <>
+                                                    <Text style={styles.text.header2}>{artefact.content.title}</Text>
+                                                    <Text style={styles.text.body3}>{artefact.content.content}</Text>
+                                                </>
+                                            )}
+                                            {artefact.type === 'keyword' && (
+                                                <Text style={{ ...styles.text.header2, fontStyle: 'italic' }}>{artefact.content}</Text>
+                                            )}
+                                            <View style={{ paddingTop: 5, paddingBottom: 5 }}>
+                                                <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
+                                                    {artefact.contexts.people?.map((person, index) => {
+                                                        return (
+                                                            <Text style={[styles.text.body3, { marginRight: 5, fontWeight: "bold" }]} key={`${person}-${index}`}>{person}</Text>
+                                                        )
+                                                    })}
+                                                </View>
+                                                <Text
+                                                    style={[styles.text.body3, { flexShrink: 1 }]}
+                                                // numberOfLines={1}
+                                                // ellipsizeMode='tail'
+                                                >
+                                                    {artefact.contexts.location.name}
+                                                </Text>
+                                            </View>
                                         </View>
-                                    </View>
+                                    </Pressable>
                                 ))}
                             </View>
                         </View>
@@ -205,6 +222,6 @@ function Home() {
     );
 }
 
-Home.propTypes = {}
+HomeView.propTypes = {}
 
-export default Home
+export default HomeView
