@@ -31,7 +31,7 @@ function PhotoArtefactsProvider({ children }) {
         setCurrentPhoto
     }
 
-    console.log('allPhotos', photos)
+    // console.log('allPhotos', photos)
 
     return (
         <PhotoArtefactsContext.Provider value={value}>
@@ -50,24 +50,26 @@ function photosReducer(state, action) {
             return action.payload;
         }
         case 'getAllPhotos': {
-            const strPhotos = storage.getString('photos')
+            const strPhotos = storage.getString('photos');
 
             if (strPhotos) {
-                const allPhotos = JSON.parse(strPhotos)
-                return allPhotos
+                const allPhotos = JSON.parse(strPhotos);
+                return allPhotos;
             }
-            return [...state]
+            return [...state];
         }
         case 'addPhoto': {
-            const updatedPhotos = [...state, action.payload]
-            storage.set('photos', JSON.stringify(updatedPhotos))
-            return [...updatedPhotos]
+            const updatedPhotos = [...state, action.payload];
+            storage.set('photos', JSON.stringify(updatedPhotos));
+            return [...updatedPhotos];
         }
         case 'removePhoto': {
-            const updatedPhotos = [...state].filter(photo => photo.id !== action.payload.id)
-            storage.set('photos', updatedPhotos)
-            return [...updatedPhotos]
+            const updatedPhotos = [...state].filter(photo => photo.id !== action.payload.id);
+            storage.set('photos', JSON.stringify(updatedPhotos));
+            return [...updatedPhotos];
         }
+        default:
+            return state;
     }
 }
 

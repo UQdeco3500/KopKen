@@ -18,25 +18,30 @@ import { storage } from '../../App';
 import { useMPC } from '../hooks/useMPC';
 import { extractDisplayNames, useNearbyPeersContext } from '../context/NearbyPeersProvider';
 
-function CapturePhotoArtefactView({ navigation }) {
+function CapturePhotoArtefactView({ navigation, route }) {
+
+
+    let toRecreate;
+    if (route.params) {
+        toRecreate = route.params.toRecreate
+    }
 
     const {
-        photos,
         addPhoto
     } = usePhotoArtefacts()
 
     const userLocation = useUserLocation()
     const { locationName, locationData } = userLocation
 
-    console.log('userLocation', locationName)
+    // console.log('userLocation', locationName)
 
     const {
         nearbyPeers,
         peers
     } = useNearbyPeersContext()
 
-    console.log('nearbyPeers', nearbyPeers)
-    console.log('peers', peers)
+    // console.log('nearbyPeers', nearbyPeers)
+    // console.log('peers', peers)
 
     const camera = useRef(null);
     const devices = useCameraDevices();
@@ -62,23 +67,19 @@ function CapturePhotoArtefactView({ navigation }) {
             setImageSource(photo.path);
             setImageObject(photo)
             setShowCamera(false);
-            console.log(photo);
+            // console.log(photo);
         }
     };
 
     const savePhoto = (newPhoto, locationData) => {
-        addPhoto(newPhoto, locationData, extractDisplayNames(peers));
+        if (toRecreate) {
+            const groupId = toRecreate.groupId || toRecreate.id;
+            addPhoto(newPhoto, locationData, extractDisplayNames(peers), groupId);
+        } else {
+            addPhoto(newPhoto, locationData, extractDisplayNames(peers));
+        }
         setShowCamera(true);
     }
-
-    // const savePhotoPath = (photoPath) => {
-    //     console.log(photoPath)
-    //     const existingPhotos = JSON.parse(storage.getString('photos') || '[]');
-    //     existingPhotos.push(photoPath);
-    //     storage.set('photos', JSON.stringify(existingPhotos));
-    //     setShowCamera(true);
-
-    // };
 
     const handleBackButton = () => {
         setShowCamera(false)
@@ -100,20 +101,22 @@ function CapturePhotoArtefactView({ navigation }) {
                         isActive={showCamera}
                         photo={true}
                     >
-                        <Image
-                            style={{
-                                backgroundColor: 'rgba(255,0,0,.4)',
-                                position: 'absolute',
-                                flex: 1,
-                                top: 0,
-                                height: '100%',
-                                width: '100%',
-                                opacity: .2,
-                            }}
-                            source={{
-                                uri: `file://'${imageSource}`,
-                            }}
-                        />
+                        {toRecreate && (
+                            <Image
+                                style={{
+                                    backgroundColor: 'rgba(255,0,0,.4)',
+                                    position: 'absolute',
+                                    flex: 1,
+                                    top: 0,
+                                    height: '100%',
+                                    width: '100%',
+                                    opacity: .2,
+                                }}
+                                source={{
+                                    uri: `file://'${toRecreate.path}`,
+                                }}
+                            />
+                        )}
                     </Camera>
                     <View style={styles.buttonContainer}>
                         <Pressable

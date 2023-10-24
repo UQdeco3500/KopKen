@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Dimensions, Image, SafeAreaView, ScrollView, Text, View } from 'react-native'
+import { Button, Dimensions, Image, SafeAreaView, ScrollView, Text, View } from 'react-native'
 import { colors, sizes } from '../data/theme'
 import Chip from '../components/Chip'
+import usePhotoArtefacts from '../hooks/usePhotoArtefacts'
 
 const screen_width = Dimensions.get('screen').width - 32;
 function ArtefactDetailView({ navigation, route }) {
     const { photo } = route.params
+    const { getGroupPhotos } = usePhotoArtefacts();
+    const [groupPhotos, setGroupPhotos] = useState([]);
+
+    useEffect(() => {
+        const photosInGroup = getGroupPhotos(photo.groupId);
+        setGroupPhotos(photosInGroup);
+    }, [photo.groupId]);
 
     const isPortrait = photo.height > photo.width;
     const imgWidth = isPortrait ? screen_width / (photo.height / photo.width) : screen_width;
@@ -29,7 +37,8 @@ function ArtefactDetailView({ navigation, route }) {
         }
     }
 
-    console.log('currentPhotoDetail', photo.contexts)
+    // console.log('currentPhotoDetail', photo.contexts)
+    console.log('photo', photo)
     return (
         <ScrollView style={{ flex: 1 }} contentInsetAdjustmentBehavior='automatic'>
             <SafeAreaView style={{ flex: 1 }}>
@@ -77,6 +86,25 @@ function ArtefactDetailView({ navigation, route }) {
                         ))}
                     </View>
 
+                    <Button
+                        title='Recreate'
+                        onPress={() => navigation.navigate('Capture Photo', { toRecreate: photo })}
+                    />
+
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', marginTop: 20 }}>
+                        {groupPhotos.map(groupPhoto => (
+                            <View key={groupPhoto.id} style={{ margin: 10 }}>
+                                <Image
+                                    source={{ uri: `file://${groupPhoto.path}` }}
+                                    style={{
+                                        width: 100,
+                                        height: 100,
+                                        resizeMode: 'contain',
+                                    }}
+                                />
+                            </View>
+                        ))}
+                    </View>
                 </View>
             </SafeAreaView>
         </ScrollView>

@@ -17,7 +17,7 @@ function usePhotoArtefacts(props) {
         })
     }
 
-    const addPhoto = (newPhoto, locationData, peopleData) => {
+    const addPhoto = (newPhoto, locationData, peopleData, groupId) => {
         getAllPhotos();
         dispatchPhotos({
             type: 'addPhoto',
@@ -25,13 +25,14 @@ function usePhotoArtefacts(props) {
                 id: Date.now(),
                 dateAdded: Date.now(),
                 ...newPhoto,
+                groupId: groupId,
                 contexts: {
                     location: locationData,
-                    people: peopleData
-                }
-            }
-        })
-    }
+                    people: peopleData,
+                },
+            },
+        });
+    };
 
     const removePhoto = (photoID) => {
         getAllPhotos();
@@ -43,6 +44,10 @@ function usePhotoArtefacts(props) {
         })
     }
 
+    const getGroupPhotos = (groupId) => {
+        return photos.filter(photo => photo.groupId === groupId);
+    };
+
     const value = {
         photos,
         currentPhoto,
@@ -50,8 +55,9 @@ function usePhotoArtefacts(props) {
         setCurrentPhoto,
         getAllPhotos,
         addPhoto,
-        removePhoto
-    }
+        removePhoto,
+        getGroupPhotos,  // Include getGroupPhotos in the value object
+    };
 
     return { ...value }
 }

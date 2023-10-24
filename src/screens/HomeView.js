@@ -52,9 +52,9 @@ function HomeView({ navigation }) {
             )
     );
 
-    console.log('nearbyPeers', extractDisplayNames(peers))
-    console.log('peers', peers)
-    // console.log('photos', photos)
+    // console.log('nearbyPeers', extractDisplayNames(peers))
+    // console.log('peers', peers)
+    console.log('photos', photos)
     // storage.clearAll()
 
 
