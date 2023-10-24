@@ -23,7 +23,9 @@ function HomeView({ navigation }) {
         stopAdvertising,
         disconnect,
         peers,
-        changeDisplayName
+        changeDisplayName,
+        showInput,
+        setShowInput
     } = useMPC();
 
     const [newDisplayName, setNewDisplayName] = useState('');
@@ -94,26 +96,32 @@ function HomeView({ navigation }) {
                     <View style={{ gap: sizes.padding.lg }} >
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={{ ...styles.text.header2 }}>Hey, {displayName}</Text>
-                            <Image source={pencilIcon} style={{ marginLeft: 10, width: 20, height: 20 }} />
+                            <Pressable onPress={() => setShowInput(!showInput)}>
+                                <Image source={pencilIcon} style={{ marginLeft: 10, width: 20, height: 20 }} />
+                            </Pressable>
                         </View>
-                        <View style={{ padding: sizes.padding.md, backgroundColor: 'grey', borderRadius: sizes.padding.sm }} >
-                            <TextInput
-                                value={newDisplayName}
-                                onChangeText={setNewDisplayName}
-                                placeholder={'New Display Name'}
-                            />
-                        </View>
-                        <Button
-                            title={'Change Display Name'}
-                            onPress={() => changeDisplayName(newDisplayName)}
-                        />
+                        {showInput && (
+                            <>
+                                <View style={{ padding: sizes.padding.md, backgroundColor: 'grey', borderRadius: sizes.padding.sm }} >
+                                    <TextInput
+                                        value={newDisplayName}
+                                        onChangeText={setNewDisplayName}
+                                        placeholder={'New Display Name'}
+                                    />
+                                </View>
+                                <Button
+                                    title={'Change Display Name'}
+                                    onPress={() => changeDisplayName(newDisplayName)}
+                                />
+                            </>
+                        )}
                         <View>
                             <Text style={{ ...styles.text.body1 }}>Current location:</Text>
                             <Text style={{ ...styles.text.header2 }}>{userLocation}</Text>
                         </View>
                         <View style={styles.borderedButton}>
                             <View style={{ gap: sizes.padding.xs }}>
-                                <Text style={{ ...styles.text.body1 }} >Browse Mode</Text>
+                                <Text style={{ ...styles.text.body1 }}>Connect With Others</Text>
                                 <Text style={styles.text.body3} >Turn on if you want to find others.</Text>
                             </View>
                             <Switch
