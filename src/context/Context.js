@@ -36,13 +36,13 @@ function StoreProvider({ children }) {
     }, []);
 
     return (
-        <LocationContext.Provider value={userLocation}>
+        <PhotoArtefactsProvider>
             <NearbyPeersProvider>
-                <PhotoArtefactsProvider>
+                <LocationContext.Provider value={userLocation}>
                     {children}
-                </PhotoArtefactsProvider>
+                </LocationContext.Provider>
             </NearbyPeersProvider>
-        </LocationContext.Provider>
+        </PhotoArtefactsProvider>
     )
 }
 
