@@ -12,6 +12,7 @@ export const useMPC = () => {
     const [isAdvertizing, setIsAdvertizing] = useState(false);
     const [peers, setPeers] = useState({});
     const [session, setSession] = useState(null);
+    const [showInput, setShowInput] = useState(false);
 
     useEffect(() => {
         const loadDisplayName = () => {
@@ -72,6 +73,7 @@ export const useMPC = () => {
     const changeDisplayName = (newDisplayName) => {
         // Disconnect the current session
         disconnect();
+        setShowInput(false)
 
         // Wait a moment to ensure disconnection
         setTimeout(() => {
@@ -175,5 +177,7 @@ export const useMPC = () => {
         disconnect,
         peers,
         changeDisplayName,
+        showInput,
+        setShowInput
     };
 };
