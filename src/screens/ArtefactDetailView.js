@@ -9,14 +9,11 @@ function ArtefactDetailView({ navigation, route }) {
 
     console.log(artefact.contexts.location.name)
     return (
-        <ScrollView style={{
-            flex: 1,
-            // backgroundColor: colors.darkTurquoise
-        }}
-            contentInsetAdjustmentBehavior='automatic'
-        >
-            <SafeAreaView>
+        <ScrollView style={{ flex: 1 }} contentInsetAdjustmentBehavior='automatic'>
+            <SafeAreaView style={{ flex: 1 }}>
                 <View style={{
+                    flex: 1,
+                    flexDirection: 'column',
                     padding: sizes.padding.md,
                     gap: sizes.gap.lg,
                     paddingBottom: sizes.padding.lg * 2
@@ -24,24 +21,29 @@ function ArtefactDetailView({ navigation, route }) {
                     <Image
                         source={artefact.content}
                         style={{
-                            width: 100,
-                            height: 100
+                            flex: 1,
+                            width: '100%',
+                            resizeMode: 'cover'
                         }}
                     />
                     <Chip
                         text={artefact.contexts.location.name}
+                        style={{ flex: 0 }}
                     />
-                    {artefact.contexts.people.map(person => {
-                        return (
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
+                        {artefact.contexts.people.map(person => (
                             <Chip
                                 key={person}
                                 text={person}
+                                style={{ marginRight: 10 }}
                             />
-                        )
-                    })}
+                        ))}
+                    </View>
+
                 </View>
             </SafeAreaView>
         </ScrollView>
+
 
     )
 }
