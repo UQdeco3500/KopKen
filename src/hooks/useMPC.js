@@ -73,6 +73,7 @@ export const useMPC = () => {
     const changeDisplayName = (newDisplayName) => {
         // Disconnect the current session
         disconnect();
+        setShowInput(false)
 
         // Wait a moment to ensure disconnection
         setTimeout(() => {
