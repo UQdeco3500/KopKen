@@ -13,7 +13,8 @@ import Chip from '../components/Chip';
 import { extractDisplayNames } from '../context/NearbyPeersProvider';
 import useNearbyPeers from '../hooks/useNearbyPeers';
 import pencilIcon from '../../src/assets/icons/pencil.png';
-import PrimaryButton from '../components/PrimaryButton'
+import trashIcon from '../../src/assets/icons/trash.png';
+import PrimaryButton from '../components/PrimaryButton';
 
 function HomeView({ navigation }) {
     const {
@@ -108,10 +109,19 @@ function HomeView({ navigation }) {
             <SafeAreaView>
                 <View style={{ padding: sizes.padding.md }}>
                     <View style={{ gap: sizes.padding.lg }} >
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ ...styles.text.header2 }}>Hey, {displayName}</Text>
-                            <Pressable onPress={() => setShowInput(!showInput)}>
-                                <Image source={pencilIcon} style={{ marginLeft: 10, width: 20, height: 20 }} />
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                gap: sizes.gap.sm
+                            }}>
+                                <Text style={{ ...styles.text.header2 }}>Hey, {displayName}</Text>
+                                <Pressable onPress={() => setShowInput(!showInput)}>
+                                    <Image source={pencilIcon} style={{ marginLeft: 10, width: 20, height: 20 }} />
+                                </Pressable>
+                            </View>
+                            <Pressable onPress={() => storage.clearAll()}>
+                                <Image source={trashIcon} style={{ marginLeft: 10, width: 20, height: 20 }} />
                             </Pressable>
                         </View>
                         {showInput && (
@@ -327,7 +337,7 @@ function HomeView({ navigation }) {
                     </View>
                 </View>
             </SafeAreaView>
-        </ScrollView>
+        </ScrollView >
     );
 }
 
