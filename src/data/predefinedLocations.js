@@ -20,6 +20,13 @@ export const predefinedLocations = [
         name: 'University of Queensland',
         latitude: -27.50034525759815,
         longitude: 153.0143523453111
+    },
+    {
+        // -27.49478339339113
+        // 153.01417374611142
+        name: 'UQ Business School',
+        latitude: -27.49478339339113,
+        longitude: 153.01417374611142
     }
 
 ]

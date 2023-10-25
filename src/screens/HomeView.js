@@ -6,8 +6,12 @@ import { predefinedLocations } from '../data/predefinedLocations';
 import { useUserLocation } from '../context/Context';
 import { dummyArtefacts } from '../data/dummyArtefacts';
 import { sizes, styles, colors } from '../data/theme';
-import { useMPC } from '../hooks/useMPC';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import usePhotoArtefacts from '../hooks/usePhotoArtefacts';
+import { storage } from '../../App';
+import Chip from '../components/Chip';
+import { extractDisplayNames } from '../context/NearbyPeersProvider';
+import useNearbyPeers from '../hooks/useNearbyPeers';
 import pencilIcon from '../../src/data/icons/pencil.png';
 
 function HomeView({ navigation }) {
@@ -24,31 +28,39 @@ function HomeView({ navigation }) {
         disconnect,
         peers,
         changeDisplayName,
-        showInput,
-        setShowInput
-    } = useMPC();
+        nearbyPeers
+    } = useNearbyPeers();
+
+    const {
+        photos
+    } = usePhotoArtefacts()
 
     const [newDisplayName, setNewDisplayName] = useState('');
+    const [showInput, setShowInput] = useState(false)
 
-    const userLocation = useUserLocation()
+    const {
+        locationName,
+        locationCoords
+    } = useUserLocation()
 
-    const extractDisplayNames = (peers) => {
-        return Object.values(peers).map(peerInfo => peerInfo.peer.displayName);
-    };
 
-    const nearbyPeers = extractDisplayNames(peers);
+    const matchingartefacts = photos
+        .filter(
+            photo =>
+                photo.contexts.location.locationName === locationName &&
+                (Object.keys(peers).length === 0 ||
+                    (photo.contexts.people.length === 0 ? true :
+                        photo.contexts.people?.some(person => extractDisplayNames(peers).includes(person))
+                    )
+                )
+        )
+        .sort((a, b) => b.dateAdded - a.dateAdded);
 
-    const matchingartefacts = dummyArtefacts.filter(
-        artefact =>
-            artefact.contexts.location.name === userLocation &&
-            (Object.keys(peers).length === 0 ||
-                (artefact.contexts.people ?
-                    artefact.contexts.people.some(peer => nearbyPeers.includes(peer))
-                    : true)
-            )
-    );
+    // console.log('nearbyPeers', extractDisplayNames(peers))
+    // console.log('peers', peers)
+    console.log('photos', photos)
+    // storage.clearAll()
 
-    console.log('peers', nearbyPeers)
 
     function disconnectBrowsing() {
         stopBrowsing()
@@ -117,7 +129,7 @@ function HomeView({ navigation }) {
                         )}
                         <View>
                             <Text style={{ ...styles.text.body1 }}>Current location:</Text>
-                            <Text style={{ ...styles.text.header2 }}>{userLocation}</Text>
+                            <Text style={{ ...styles.text.header2 }}>{locationName}</Text>
                         </View>
                         <View style={styles.borderedButton}>
                             <View style={{ gap: sizes.padding.xs }}>
@@ -186,9 +198,21 @@ function HomeView({ navigation }) {
                                 )}
                         </View>
                         <View style={{ borderWidth: 2, borderColor: colors.darkGrey, borderRadius: 25, padding: 10, backgroundColor: colors.darkGreyTransparent }}>
-                            <Text style={{ ...styles.text.header2, paddingBottom: 10, paddingTop: 10, paddingLeft: 10 }}>Artefacts</Text>
+
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between'
+                            }}>
+                                <Text style={{ ...styles.text.header2, paddingBottom: 10, paddingTop: 10, paddingLeft: 10 }}>Artefacts</Text>
+                                <Button
+                                    title='Create an Artefact'
+                                    onPress={() => navigation.navigate('Capture Photo')}
+                                />
+                            </View>
+
                             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                                {matchingartefacts.map((artefact, index) => (
+                                {/* {matchingartefacts.map((artefact, index) => (
                                     <Pressable
                                         key={index}
                                         onPress={() => navigation.navigate('Artefact Detail', { artefact })}
@@ -233,7 +257,36 @@ function HomeView({ navigation }) {
                                             </View>
                                         </View>
                                     </Pressable>
-                                ))}
+                                ))} */}
+                                {matchingartefacts.map(photo => {
+                                    return (
+                                        <Pressable
+                                            key={photo.id}
+                                            onPress={() => navigation.navigate('Artefact Detail', { photo })}
+                                        >
+                                            <Image
+                                                style={{
+                                                    width: 100,
+                                                    height: 100
+                                                }}
+                                                source={{
+                                                    uri: `file://${photo.path}`,  // Ensure the file path is correct
+                                                }}
+                                            />
+                                            <Text></Text>
+                                            {photo.contexts.people.map(person => {
+                                                return (
+                                                    <Text
+                                                        key={person}
+                                                        style={styles.text.body3}
+                                                    >
+                                                        {person}
+                                                    </Text>
+                                                )
+                                            })}
+                                        </Pressable>
+                                    )
+                                })}
                             </View>
                         </View>
                     </View>
