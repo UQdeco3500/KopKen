@@ -17,7 +17,9 @@ function useNearbyPeers(props) {
         disconnect,
         peers,
         changeDisplayName,
-        nearbyPeers
+        nearbyPeers,
+        setShowInput,
+        showInput
     } = useNearbyPeersContext()
 
 
@@ -34,7 +36,9 @@ function useNearbyPeers(props) {
         disconnect,
         peers,
         changeDisplayName,
-        nearbyPeers
+        nearbyPeers,
+        setShowInput,
+        showInput
     }
 
     return { ...value }
