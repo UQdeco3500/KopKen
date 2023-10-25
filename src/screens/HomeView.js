@@ -47,17 +47,28 @@ function HomeView({ navigation }) {
     } = useUserLocation()
 
 
+    // const matchingartefacts = photos
+    //     .filter(
+    //         photo =>
+    //             photo.contexts.location.locationName === locationName &&
+    //             (Object.keys(peers).length === 0 ||
+    //                 (photo.contexts.people.length === 0 ? false :
+    //                     photo.contexts.people?.some(person => extractDisplayNames(peers).includes(person))
+    //                 )
+    //             )
+    //     )
+    //     .sort((a, b) => b.dateAdded - a.dateAdded);
+
     const matchingartefacts = photos
         .filter(
             photo =>
                 photo.contexts.location.locationName === locationName &&
                 (Object.keys(peers).length === 0 ||
-                    (photo.contexts.people.length === 0 ? true :
-                        photo.contexts.people?.some(person => extractDisplayNames(peers).includes(person))
-                    )
+                    photo.contexts.people?.some(person => extractDisplayNames(peers).includes(person))
                 )
         )
         .sort((a, b) => b.dateAdded - a.dateAdded);
+
 
     // console.log('nearbyPeers', extractDisplayNames(peers))
     // console.log('peers', peers)

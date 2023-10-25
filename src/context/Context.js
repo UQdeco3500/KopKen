@@ -16,6 +16,11 @@ export function useUserLocation() {
 
 
 function StoreProvider({ children }) {
+    /** Ignore all warning logs related to Geolocation */
+    LogBox.ignoreLogs([
+        'Sending `geolocationError` with no listeners registered.',
+        'Sending `geolocationDidChange` with no listeners registered.',
+    ]);
 
     /** Ignore all warning logs related to Geolocation */
     LogBox.ignoreLogs([
