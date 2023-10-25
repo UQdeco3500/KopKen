@@ -1,46 +1,55 @@
 {
   "images" : [
     {
+      "filename" : "Frame 1600KopkenIcon.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
+      "filename" : "Frame 1599KopkenIcon.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "20x20"
     },
     {
+      "filename" : "Frame 1598KopkenIcon.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
+      "filename" : "87x87KopkenIcon.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
+      "filename" : "Frame 1596KopkenIcon.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
+      "filename" : "Frame 1595KopkenIcon.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "40x40"
     },
     {
+      "filename" : "Frame 1595KopkenIcon 1.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
+      "filename" : "Frame 1594KopkenIcon.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
     },
     {
+      "filename" : "Frame 1593KopkenIcon.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
