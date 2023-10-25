@@ -11,12 +11,13 @@ import {
     Pressable,
 } from 'react-native';
 import { Camera, useCameraDevice, useCameraDevices } from 'react-native-vision-camera';
-import { sizes } from '../data/theme';
+import { sizes, colors } from '../data/theme';
 import usePhotoArtefacts from '../hooks/usePhotoArtefacts';
 import { useUserLocation } from '../context/Context';
 import { storage } from '../../App';
 import { extractDisplayNames, useNearbyPeersContext } from '../context/NearbyPeersProvider';
 import useNearbyPeers from '../hooks/useNearbyPeers';
+import PrimaryButton from '../components/PrimaryButton';
 
 function CapturePhotoArtefactView({ navigation, route }) {
 
@@ -129,14 +130,16 @@ function CapturePhotoArtefactView({ navigation, route }) {
                         backgroundColor: 'rgba(0,0,0,0.2)',
                         position: 'absolute',
                         justifyContent: 'center',
-                        alignItems: 'center',
+                        alignItems: 'left',
                         width: '100%',
                         top: 0,
-                        padding: sizes.padding.lg,
+                        padding: sizes.padding.sm,
                         paddingTop: sizes.padding.lg * 2
                     }}>
-                        <Pressable
-                            style={styles.camButton}
+                        <PrimaryButton
+                            // style={styles.camButton}
+                            color={colors.purple}
+                            text='Back'
                             onPress={handleBackButton}
                         />
                     </View>

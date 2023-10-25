@@ -33,7 +33,7 @@ function PrimaryButton({ variant, onPress, text, color, disabled }) {
             onPress={onPress}
             style={{
                 backgroundColor: color,
-                width: '100%',
+                // width: '100%',
                 justifyContent: 'center',
                 alignItems: 'center',
                 padding: sizes.button.padding.sm,
