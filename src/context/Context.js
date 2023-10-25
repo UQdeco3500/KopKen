@@ -5,6 +5,7 @@ import Geolocation from '@react-native-community/geolocation';
 import { assignLocationName, isWithinRadius } from '../helpers/locationServices';
 import PhotoArtefactsProvider from './PhotoArtefactsProvider';
 import NearbyPeersProvider from './NearbyPeersProvider';
+import { LogBox } from 'react-native';
 
 
 const LocationContext = createContext(null)
@@ -15,6 +16,12 @@ export function useUserLocation() {
 
 
 function StoreProvider({ children }) {
+
+    /** Ignore all warning logs related to Geolocation */
+    LogBox.ignoreLogs([
+        'Sending `geolocationError` with no listeners registered.',
+        'Sending `geolocationDidChange` with no listeners registered.',
+    ]);
 
     const [userLocation, setUserLocation] = useState({})
 
