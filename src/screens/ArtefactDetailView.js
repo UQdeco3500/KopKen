@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Dimensions, Image, SafeAreaView, ScrollView, Text, View } from 'react-native'
-import { colors, sizes } from '../data/theme'
+import { colors, sizes, styles } from '../data/theme'
 import Chip from '../components/Chip'
 import usePhotoArtefacts from '../hooks/usePhotoArtefacts'
+import { formatDate } from '../helpers/helpers'
 
 const screen_width = Dimensions.get('screen').width - 32;
 function ArtefactDetailView({ navigation, route }) {
@@ -72,18 +73,24 @@ function ArtefactDetailView({ navigation, route }) {
                             }}
                         />
                     </View>
+                    <Text style={styles.text.body2}>{formatDate(photo.dateAdded).dayString}</Text>
+                    <Text style={styles.text.body2}>{formatDate(photo.dateAdded).timeString}</Text>
+                    <Text style={styles.text.header3}>Where this photo is taken</Text>
                     <Chip
                         text={photo.contexts.location.locationName}
                         style={{ flex: 0 }}
                     />
+                    <Text style={styles.text.header3}>People in this photo</Text>
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
-                        {photo.contexts.people.map(person => (
+                        {photo.contexts.people.length > 0 ? photo.contexts.people.map(person => (
                             <Chip
                                 key={person}
                                 text={person}
                                 style={{ marginRight: 10 }}
                             />
-                        ))}
+                        )) : (
+                            <Text style={styles.text.body3} >No one else in this photo</Text>
+                        )}
                     </View>
 
                     <Button
@@ -93,7 +100,11 @@ function ArtefactDetailView({ navigation, route }) {
 
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', marginTop: 20 }}>
                         {groupPhotos.map(groupPhoto => (
-                            <View key={groupPhoto.id} style={{ margin: 10 }}>
+                            <View key={groupPhoto.id} style={{
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: sizes.gap.xs
+                            }}>
                                 <Image
                                     source={{ uri: `file://${groupPhoto.path}` }}
                                     style={{
@@ -102,6 +113,8 @@ function ArtefactDetailView({ navigation, route }) {
                                         resizeMode: 'contain',
                                     }}
                                 />
+                                <Text style={styles.text.body3}>{formatDate(groupPhoto.dateAdded).compactDateString}</Text>
+                                <Text style={styles.text.body3}>{formatDate(groupPhoto.dateAdded).timeString}</Text>
                             </View>
                         ))}
                     </View>

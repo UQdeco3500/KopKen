@@ -6,12 +6,12 @@ import { predefinedLocations } from '../data/predefinedLocations';
 import { useUserLocation } from '../context/Context';
 import { dummyArtefacts } from '../data/dummyArtefacts';
 import { sizes, styles, colors } from '../data/theme';
-import { useMPC } from '../hooks/useMPC';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import usePhotoArtefacts from '../hooks/usePhotoArtefacts';
 import { storage } from '../../App';
 import Chip from '../components/Chip';
-import { extractDisplayNames, useNearbyPeersContext } from '../context/NearbyPeersProvider';
+import { extractDisplayNames } from '../context/NearbyPeersProvider';
+import useNearbyPeers from '../hooks/useNearbyPeers';
 
 function HomeView({ navigation }) {
     const {
@@ -28,7 +28,7 @@ function HomeView({ navigation }) {
         peers,
         changeDisplayName,
         nearbyPeers
-    } = useNearbyPeersContext();
+    } = useNearbyPeers();
 
     const {
         photos

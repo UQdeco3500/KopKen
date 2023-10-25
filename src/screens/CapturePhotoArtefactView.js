@@ -15,8 +15,8 @@ import { sizes } from '../data/theme';
 import usePhotoArtefacts from '../hooks/usePhotoArtefacts';
 import { useUserLocation } from '../context/Context';
 import { storage } from '../../App';
-import { useMPC } from '../hooks/useMPC';
 import { extractDisplayNames, useNearbyPeersContext } from '../context/NearbyPeersProvider';
+import useNearbyPeers from '../hooks/useNearbyPeers';
 
 function CapturePhotoArtefactView({ navigation, route }) {
 
@@ -38,7 +38,7 @@ function CapturePhotoArtefactView({ navigation, route }) {
     const {
         nearbyPeers,
         peers
-    } = useNearbyPeersContext()
+    } = useNearbyPeers()
 
     // console.log('nearbyPeers', nearbyPeers)
     // console.log('peers', peers)
