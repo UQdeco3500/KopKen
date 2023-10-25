@@ -13,6 +13,7 @@ export const colors = {
     red: 'red',
     blue: '#0084E3',
     yellow: '#FFD60A',
+    purple: '#9747FF',
     textArea: {
         backgroundColor: 'rgba(217,217,217,.08)',
         color: 'rgba(203, 228, 222, .45)'
