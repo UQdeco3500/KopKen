@@ -13,6 +13,8 @@ import Chip from '../components/Chip';
 import { extractDisplayNames } from '../context/NearbyPeersProvider';
 import useNearbyPeers from '../hooks/useNearbyPeers';
 import pencilIcon from '../../src/assets/icons/pencil.png';
+import PrimaryButton from '../components/PrimaryButton'
+
 function HomeView({ navigation }) {
     const {
         displayName,
@@ -27,7 +29,9 @@ function HomeView({ navigation }) {
         disconnect,
         peers,
         changeDisplayName,
-        nearbyPeers
+        nearbyPeers,
+        setShowInput,
+        showInput
     } = useNearbyPeers();
 
     const {
@@ -35,7 +39,6 @@ function HomeView({ navigation }) {
     } = usePhotoArtefacts()
 
     const [newDisplayName, setNewDisplayName] = useState('');
-    const [showInput, setShowInput] = useState(false)
 
     const {
         locationName,
@@ -120,8 +123,13 @@ function HomeView({ navigation }) {
                                         placeholder={'New Display Name'}
                                     />
                                 </View>
-                                <Button
+                                {/* <Button
                                     title={'Change Display Name'}
+                                    onPress={() => changeDisplayName(newDisplayName)}
+                                /> */}
+                                <PrimaryButton
+                                    text={'Change Display Name'}
+                                    color={colors.purple}
                                     onPress={() => changeDisplayName(newDisplayName)}
                                 />
                             </>
@@ -204,13 +212,26 @@ function HomeView({ navigation }) {
                                 justifyContent: 'space-between'
                             }}>
                                 <Text style={{ ...styles.text.header2, paddingBottom: 10, paddingTop: 10, paddingLeft: 10 }}>Artefacts</Text>
-                                <Button
+                                {/* <Button
                                     title='Create an Artefact'
                                     onPress={() => navigation.navigate('Capture Photo')}
+                                /> */}
+                                <PrimaryButton
+                                    text={'Create an Artefact'}
+                                    color={colors.purple}
+                                    onPress={() => navigation.navigate('Capture Photo')}
+                                    // style={{ width: 10 }}
+                                    width={'100'}
                                 />
                             </View>
 
-                            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                            <View style={{
+                                flexDirection: 'row',
+                                flexWrap: 'wrap',
+                                justifyContent: 'flex-start',
+                                alignItems: 'center',
+                                paddingTop: 10,
+                            }}>
                                 {/* {matchingartefacts.map((artefact, index) => (
                                     <Pressable
                                         key={index}
@@ -262,18 +283,30 @@ function HomeView({ navigation }) {
                                         <Pressable
                                             key={photo.id}
                                             onPress={() => navigation.navigate('Artefact Detail', { photo })}
+                                            style={{
+                                                width: '50%',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                padding: 10
+                                            }}
                                         >
                                             <Image
                                                 style={{
-                                                    width: 100,
-                                                    height: 100
+                                                    width: '80%',
+                                                    // height: 100,
+                                                    aspectRatio: 1,
+                                                    // margin: 10,
+                                                    backgroundColor: 'white',
+                                                    borderRadius: sizes.radius.lg,
+                                                    // flex: 1 / 2
                                                 }}
+                                                // style={{ width: '44%', margin: '3%' }}
                                                 source={{
                                                     uri: `file://${photo.path}`,  // Ensure the file path is correct
                                                 }}
                                             />
                                             <Text></Text>
-                                            {photo.contexts.people.map(person => {
+                                            <View style={{ flexDirection: 'row', gap: sizes.gap.xs }}>{photo.contexts.people.length > 0 ? photo.contexts.people.map(person => {
                                                 return (
                                                     <Text
                                                         key={person}
@@ -282,7 +315,10 @@ function HomeView({ navigation }) {
                                                         {person}
                                                     </Text>
                                                 )
-                                            })}
+                                            }) : (
+                                                <Text></Text>
+                                            )}</View>
+                                            <Text style={styles.text.body3}>{photo.contexts.location.locationName}</Text>
                                         </Pressable>
                                     )
                                 })}
