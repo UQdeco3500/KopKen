@@ -13,6 +13,8 @@ function NearbyPeersProvider({ children }) {
     const [peers, setPeers] = useState({});
     const [session, setSession] = useState(null);
     const [nearbyPeers, setNearbyPeers] = useState([]);
+    const [showInput, setShowInput] = useState(false)
+
 
     useEffect(() => {
         const loadDisplayName = () => {
@@ -128,6 +130,7 @@ function NearbyPeersProvider({ children }) {
     const changeDisplayName = (newDisplayName) => {
         // Disconnect the current session
         disconnect();
+        setShowInput(false);
 
         // Wait a moment to ensure disconnection
         setTimeout(() => {
@@ -185,7 +188,9 @@ function NearbyPeersProvider({ children }) {
         disconnect,
         peers,
         changeDisplayName,
-        nearbyPeers
+        nearbyPeers,
+        showInput,
+        setShowInput
     }
 
     return (
