@@ -1,28 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Image, SafeAreaView, ScrollView, Text, View } from 'react-native'
-import { sizes, styles, colors } from '../data/theme'
-import Chip from '../components/Chip'
 import PrimaryButton from '../components/PrimaryButton'
 import { useUserLocation } from '../context/Context';
+import { Dimensions, Image, SafeAreaView, ScrollView, Text, View } from 'react-native'
+import { colors, sizes, styles } from '../data/theme'
+import Chip from '../components/Chip'
+import usePhotoArtefacts from '../hooks/usePhotoArtefacts'
+import { formatDate } from '../helpers/helpers'
 
+const screen_width = Dimensions.get('screen').width - 32;
 function ArtefactDetailView({ navigation, route }) {
-    const { artefact } = route.params
+    const { photo } = route.params
+    const { getGroupPhotos } = usePhotoArtefacts();
+    const [groupPhotos, setGroupPhotos] = useState([]);
 
     const userLocation = useUserLocation()
 
-    function epochToDate(epoch) {
-        const date = new Date(epoch * 1000);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
+    useEffect(() => {
+        const photosInGroup = getGroupPhotos(photo.groupId);
+        setGroupPhotos(photosInGroup);
+    }, [photo.groupId]);
 
-        return `${day}-${month}-${year}`;
+    const isPortrait = photo.height > photo.width;
+    const imgWidth = isPortrait ? screen_width / (photo.height / photo.width) : screen_width;
+    const imgHeight = isPortrait ? screen_width : screen_width * (photo.height / photo.width);
+
+
+    // For future development
+    const setImageOrientation = (orientation) => {
+        switch (orientation) {
+            case 'landscape-right':
+                return [{ rotate: '-90deg' }]
+            case 'landscape-left':
+                return [{ rotate: '90deg' }]
+            case 'portrait':
+                return;
+            case 'portrait-upside-down':
+                return [{ rotate: '180deg' }]
+            default:
+                break;
+        }
     }
 
-    const formattedDate = epochToDate(artefact.dateAdded);
-
-    console.log(artefact.contexts.location.name)
+    // console.log('currentPhotoDetail', photo.contexts)
+    console.log('photo', photo)
     return (
         <ScrollView style={{ flex: 1 }} contentInsetAdjustmentBehavior='automatic'>
             <SafeAreaView style={{ flex: 1 }}>
@@ -39,19 +60,29 @@ function ArtefactDetailView({ navigation, route }) {
                         <Text style={{ ...styles.text.header2 }}>{userLocation}</Text>
                     </View>
                     {artefact.type === 'photo' && (
-                        <Image
-                            source={artefact.content}
+                        <View
                             style={{
-                                // flex: 1,
-                                width: '100%',
-                                // height: '110%',
-                                // resizeMode: 'contain',
-                                // aspectRatio: 1,
-                                borderRadius: 25,
-                                borderWidth: 5,
-                                borderColor: 'white'
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: screen_width,
+                                aspectRatio: 1,
+                                borderWidth: 1,
+                                borderColor: colors.white,
+                                borderRadius: sizes.radius.lg,
+                                padding: sizes.padding.lg,
+                                backgroundColor: colors.white
                             }}
-                        />
+                        >
+                            <Image
+                                source={{ uri: `file://${photo.path}` }}
+                                style={{
+                                    // transform: setImageOrientation(photo.orientation),
+                                    width: screen_width - sizes.padding.lg,
+                                    height: screen_width - sizes.padding.lg,
+                                    resizeMode: 'contain',  // 'contain' will ensure the image is scaled to fit within the bounding box while maintaining the aspect ratio
+                                }}
+                            />
+                        </View>
                     )}
                     {artefact.type === 'story' && (
                         <>
@@ -81,7 +112,14 @@ function ArtefactDetailView({ navigation, route }) {
                             }}>{artefact.content}</Text>
                         </View>
                     )}
-                    <Text style={styles.text.body3}>This artefact was created on {formattedDate}</Text>
+                    {/* <Text style={styles.text.body3}>This artefact was created on {formattedDate}</Text> */}
+                    <Text style={styles.text.body2}>{formatDate(photo.dateAdded).dayString}</Text>
+                    <Text style={styles.text.body2}>{formatDate(photo.dateAdded).timeString}</Text>
+                    <Text style={styles.text.header3}>Where this photo is taken</Text>
+                    <Chip
+                        text={photo.contexts.location.locationName}
+                        style={{ flex: 0 }}
+                    />
                     <Text style={styles.text.semi2}>Location:</Text>
                     <Text style={{
                         ...styles.text.header3,
@@ -89,9 +127,10 @@ function ArtefactDetailView({ navigation, route }) {
                         // fontFamily: 'Times New Roman',
                         // fontWeight: '100',
                     }}>{artefact.contexts.location.name}</Text>
-                    <Text style={styles.text.semi2}>People In This Photo:</Text>
+                    {/* <Text style={styles.text.semi2}>People In This Photo:</Text> */}
+                    <Text style={styles.text.header3}>People in this photo</Text>
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
-                        {artefact.contexts.people.map(person => (
+                        {photo.contexts.people.length > 0 ? photo.contexts.people.map(person => (
                             <Chip
                                 key={person}
                                 text={person}
@@ -99,15 +138,40 @@ function ArtefactDetailView({ navigation, route }) {
                                 variant='outlined'
                                 color='white'
                             />
-                        ))}
+                        )) : (
+                            <Text style={styles.text.body3} >No one else in this photo</Text>
+                        )}
                     </View>
                     {artefact.type === 'photo' && (
                         <PrimaryButton
                             text={'Recreate'}
                             color={colors.purple}
-                        // onPress={handleButtonPress}
+                            onPress={() => navigation.navigate('Capture Photo', { toRecreate: photo })}
                         />
+                        // <Button
+                        // title='Recreate'
+                        // onPress={() => navigation.navigate('Capture Photo', { toRecreate: photo })}/>
                     )}
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', marginTop: 20 }}>
+                        {groupPhotos.map(groupPhoto => (
+                            <View key={groupPhoto.id} style={{
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: sizes.gap.xs
+                            }}>
+                                <Image
+                                    source={{ uri: `file://${groupPhoto.path}` }}
+                                    style={{
+                                        width: 100,
+                                        height: 100,
+                                        resizeMode: 'contain',
+                                    }}
+                                />
+                                <Text style={styles.text.body3}>{formatDate(groupPhoto.dateAdded).compactDateString}</Text>
+                                <Text style={styles.text.body3}>{formatDate(groupPhoto.dateAdded).timeString}</Text>
+                            </View>
+                        ))}
+                    </View>
                 </View>
             </SafeAreaView>
         </ScrollView>
